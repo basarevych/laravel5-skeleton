@@ -1,0 +1,8 @@
+{
+  "name": "laravel5-skeleton",
+  "devDependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.4",
+    "jquery.cookie": "~1.4.1"
+  }
+}
