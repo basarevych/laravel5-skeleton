@@ -10,25 +10,6 @@
     <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0 !important;
-            width: 100%;
-            height: 100%;
-            display: table;
-        }
-
-        .centered-container {
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .centered-content {
-            text-align: center;
-            display: inline-block;
-        }
-
         .title {
             font-family: 'Lato';
             font-size: 96px;
@@ -37,11 +18,13 @@
         }
 
         .quote {
-            font-size: 24px;
+            font-size: 20px;
             color: #B0BEC5;
         }
     </style>
 @endsection
+
+@section('body-class', 'with-centered-container');
 
 @section('content')
     <div class="centered-container">

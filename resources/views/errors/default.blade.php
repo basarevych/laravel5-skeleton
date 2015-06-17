@@ -1,50 +1,24 @@
-<html>
-    <head>
-        <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+@extends('layouts.default')
 
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                height: 100%;
-                color: #B0BEC5;
-                display: table;
-                font: 16pt sans-serif;
-            }
+@section('title')
+    Error - @parent
+@endsection
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
+@section('body-class', 'with-centered-container');
 
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-family: 'Lato';
-                font-size: 250%;
-                margin-bottom: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">
-                    {{ $status }} {{ $phrase }}
-                </div>
-                <div class="message">
+@section('content')
+    <div class="centered-container">
+        <div class="centered-content">
+            <div class="jumbotron">
+                <h1>{{ $status }} {{ $phrase }}</h1>
+                <p>
                     @if (Lang::has("errors.http_{$status}"))
                         {{ trans("errors.http_{$status}") }}
                     @else
                         {{ trans("errors.http_default") }}
                     @endif
-                </div>
-             </div>
-        </div>
-    </body>
-</html>
+                </p>
+            </div>
+         </div>
+    </div>
+@endsection

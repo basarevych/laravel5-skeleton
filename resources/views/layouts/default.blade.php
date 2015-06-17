@@ -11,7 +11,7 @@
             <script src="{{ elixir('js/app.js') }}"></script>
         @show
     </head>
-    <body class="with-navbar">
+    <body class="with-navbar @yield('body-class')">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -21,7 +21,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">{{ trans('messages.app_title') }}</a>
+                    <a class="navbar-brand" href="{{ url('/') }}">{{ trans('messages.app_title') }}</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="layout-navbar-top">

@@ -6479,5 +6479,24 @@ button.close {
 body.with-navbar {
   padding-top: 70px;
 }
+body.with-centered-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+body.with-centered-container .jumbotron {
+  padding: 20px 50px;
+}
+.centered-container {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+.centered-content {
+  text-align: center;
+  display: inline-block;
+}
 
 /*# sourceMappingURL=app.css.map */

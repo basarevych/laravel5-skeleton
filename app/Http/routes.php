@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome.index');
+// Index page
+Route::get('/', [ 'as' => 'index', function () { return view('welcome.index'); } ]);
+
+Route::group([ 'prefix' => 'auth', 'as' => 'auth.' ], function () {
+
+    // Authentication routes
+    Route::get('login', [ 'as' => 'login', 'uses' => 'AuthController@getLogin' ]);
+    Route::post('login', 'AuthController@postLogin');
+    Route::get('logout', [ 'as' => 'logout', 'uses' => 'AuthController@getLogout' ]);
+
+    // Registration routes. Uncomment to enable.
+    Route::get('register', [ 'as' => 'register', 'uses' => 'AuthController@getRegister' ]);
+    Route::post('register', 'AuthController@postRegister');
+});
+
+// These routes require authenticated user
+Route::group([ 'middleware' => 'auth' ], function () {
+
+    Route::resource('user', 'UserController');
+
 });
