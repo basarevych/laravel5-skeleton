@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Lang;
+use App;
 use Aura\Accept\AcceptFactory;
 
 class LocaleHub
@@ -87,7 +87,7 @@ class LocaleHub
 
         locale_set_default($locale);
         setlocale(LC_ALL, $locale . '.UTF-8');
-        Lang::setLocale($locale);
+        App::setLocale($locale);
         $this->current = $locale;
 
         return $this;

@@ -21,6 +21,7 @@ elixir(function(mix) {
             '../bower_components/jquery/dist/jquery.js',
             '../bower_components/bootstrap/dist/js/bootstrap.js',
             '../bower_components/jquery.cookie/jquery.cookie.js',
+            '../bower_components/jquery-form/jquery.form.js',
             '*.js'
         ],
         'public/js/app.js'

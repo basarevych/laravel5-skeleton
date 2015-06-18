@@ -28,6 +28,32 @@
                     <ul class="nav navbar-nav">
                     </ul>
 
+                    @if (Auth::check())
+                        <div class="btn-group navbar-btn navbar-right">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ Auth::user()->name ? Auth::user()->name : Auth::user()->email }}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        {{ trans('messages.profile') }}
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{ route('auth.logout') }}">
+                                        {{ trans('messages.sign_out') }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <button type="button" class="btn btn-default navbar-btn navbar-right" onclick="openModalForm('{{ url('/auth/login-form') }}')">
+                            {{ trans('messages.sign_in') }}
+                        </button>
+                    @endif
+
                     @if (LocaleHub::countAvailableLocales() > 1)
                         <script>
                             function setLocaleCookie(locale) {
@@ -73,5 +99,27 @@
         </nav>
 
         @yield('content')
+
+        <div id="modal-form" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <img src="{{ asset('/img/loader.gif') }}" class="spinner">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            {{ trans('messages.cancel') }}
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            {{ trans('messages.submit') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
