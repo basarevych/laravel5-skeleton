@@ -54,7 +54,7 @@
 <script>
     var modal = $('#modal-form');
 
-    modal.find('.modal-title').text('{{ trans('auth.authentication') }}');
+    modal.find('.modal-title').text('{{ trans('auth.auth_title') }}');
     modal.find('button[type=submit]').show().text('{{ trans('auth.login_submit') }}');
 
     runModalForm(modal);

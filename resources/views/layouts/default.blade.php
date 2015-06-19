@@ -36,7 +36,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="javascript:void(0)">
+                                    <a href="javascript:openModalForm('{{ url('profile-form') }}')">
                                         {{ trans('messages.profile') }}
                                     </a>
                                 </li>

@@ -26,10 +26,10 @@ class AuthController extends Controller
     /**
      * Process login form
      *
-     * @param \App\Http\Requests\AuthRequest $request
+     * @param \App\Http\Requests\LoginRequest $request
      * @return Response
      */
-    public function postLoginForm(Requests\AuthRequest $request)
+    public function postLoginForm(Requests\LoginRequest $request)
     {
         $attempt = Auth::attempt(
             [
@@ -53,7 +53,7 @@ class AuthController extends Controller
      */
     public function postValidateLoginForm(Request $request)
     {
-        $rules = (new Requests\AuthRequest)->rules();
+        $rules = (new Requests\LoginRequest)->rules();
         $field = $request->input('field');
         $form = $request->input('form');
 

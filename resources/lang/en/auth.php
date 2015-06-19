@@ -11,7 +11,7 @@ return [
     |
     */
 
-    "authentication"        => "Authentication",
+    "auth_title"            => "Authentication",
     "email_label"           => "eMail",
     "password_label"        => "Password",
     "remember_me_label"     => "Remember me",

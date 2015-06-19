@@ -173,9 +173,13 @@ function validateFormField(element, url) {
     var name = element.attr('name');
     var value = element.val();
     var timestamp = new Date().getTime();
+    var serialized = form.serializeArray();
+
+    if (serialized.length == 0)
+        return;
 
     var data = {};
-    $.each(form.serializeArray(), function (index, item) {
+    $.each(serialized, function (index, item) {
         data[item['name']] = item['value'];
     });
 
@@ -184,7 +188,7 @@ function validateFormField(element, url) {
         method: 'POST',
         data: {
             field: name,
-            form: data
+            form: data,
         },
         success: function (data) {
             var validation = form.data('validation-' + name);

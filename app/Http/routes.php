@@ -28,6 +28,15 @@ Route::group([ 'prefix' => 'auth', 'as' => 'auth.' ], function () {
 // These routes require authenticated user
 Route::group([ 'middleware' => 'auth' ], function () {
 
+    Route::get('profile-form', [ 'as' => 'profile', 'uses' => 'ProfileController@getProfileForm' ]);
+    Route::post('profile-form', 'ProfileController@postProfileForm');
+    Route::post('validate-profile-form', 'ProfileController@postValidateProfileForm');
+
+});
+
+// Administrator routes
+Route::group([ 'middleware' => 'admin' ], function () {
+
     Route::resource('user', 'UserController');
 
 });
