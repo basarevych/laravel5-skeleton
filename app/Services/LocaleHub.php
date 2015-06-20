@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App;
-use Aura\Accept\AcceptFactory;
 
 class LocaleHub
 {
@@ -64,11 +63,34 @@ class LocaleHub
         if (@$_COOKIE['locale'] && in_array($_COOKIE['locale'], $this->available)) {
             $locale = $_COOKIE['locale'];
         } else {
-            $acceptFactory = new AcceptFactory($_SERVER);
-            $accept = $acceptFactory->newInstance();
-            $language = $accept->negotiateLanguage($this->available);
-            if ($language)
-                $locale = $language->getValue();
+            $header = str_replace(" ", "", @$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $languages = [];
+            foreach (explode(",", $header) as $language) {
+                $parts = explode(";", $language);
+                if (count($parts) == 1) {
+                    $code = $parts[0];
+                    $priority = 1.0;
+                } else if (substr($parts[0], 0, 2) == 'q=') {
+                    $code = $parts[1];
+                    $priority = substr($parts[0], 2);
+                } else if (substr($parts[1], 0, 2) == 'q=') {
+                    $code = $parts[0];
+                    $priority = substr($parts[1], 2);
+                } else {
+                    continue;
+                }
+
+                $languages[$code] = (float)$priority;
+            }
+
+            arsort($languages);
+
+            foreach ($languages as $code => $priority) {
+                if (in_array($code, $this->available)) {
+                    $locale = $code;
+                    break;
+                }
+            }
         }
 
         $this->setLocale($locale);
