@@ -86,8 +86,9 @@ class LocaleHub
             arsort($languages);
 
             foreach ($languages as $code => $priority) {
-                if (in_array($code, $this->available)) {
-                    $locale = $code;
+                $test = \Locale::lookup($this->available, $code);
+                if ($test && in_array($test, $this->available)) {
+                    $locale = $test;
                     break;
                 }
             }
@@ -150,7 +151,7 @@ class LocaleHub
      */
     public function parseNumber($value)
     {
-        $fmt = new NumberFormatter($this->current, NumberFormatter::DECIMAL);
+        $fmt = new \NumberFormatter($this->current, \NumberFormatter::DECIMAL);
         $parse = $fmt->parse($value);
         if ($parse !== false)
             return $parse;

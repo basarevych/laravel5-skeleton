@@ -6,11 +6,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class IndexTest extends TestCase
 {
-    /**
-     * Front page test
-     *
-     * @return void
-     */
     public function testFrontPage()
     {
         $this->visit('/')
