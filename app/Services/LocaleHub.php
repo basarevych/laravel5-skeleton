@@ -60,7 +60,7 @@ class LocaleHub
     public function detectLocale()
     {
         $locale = config('app.locale');
-        $cookie = Cookie::get('locale');
+        $cookie = @$_COOKIE['locale'];
 
         if ($cookie && in_array($cookie, $this->available)) {
             $locale = $cookie;
