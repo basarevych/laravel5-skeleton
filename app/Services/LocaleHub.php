@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App;
+use Cookie;
 
 class LocaleHub
 {
@@ -59,9 +60,10 @@ class LocaleHub
     public function detectLocale()
     {
         $locale = config('app.locale');
+        $cookie = Cookie::get('locale');
 
-        if (@$_COOKIE['locale'] && in_array($_COOKIE['locale'], $this->available)) {
-            $locale = $_COOKIE['locale'];
+        if ($cookie && in_array($cookie, $this->available)) {
+            $locale = $cookie;
         } else {
             $header = str_replace(" ", "", @$_SERVER['HTTP_ACCEPT_LANGUAGE']);
             $languages = [];
