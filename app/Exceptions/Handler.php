@@ -4,9 +4,12 @@ namespace App\Exceptions;
 
 use Exception;
 use Mail;
+
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -18,6 +21,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Session\TokenMismatchException::class,
     ];
 
     /**
@@ -68,6 +72,10 @@ class Handler extends ExceptionHandler
     {
         if (config('app.debug'))
             return $this->renderWithStackTrace($e);
+
+        // Convert CSRF token mismatch to 400 Bad Request
+        if ($e instanceof TokenMismatchException)
+            $e = new BadRequestHttpException('Token mismatch', $e);
 
         return $this->renderDefault($e);
     }
