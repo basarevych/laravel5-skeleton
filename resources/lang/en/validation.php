@@ -107,7 +107,7 @@ return [
         'email'                 => 'eMail',
         'password'              => 'password',
         'password_confirmation' => 'password confirmation',
-        'remember_me'           => '"remember me" option',
+        'remember_me'           => '"remember me"',
     ],
 
 ];
