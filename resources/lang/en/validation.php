@@ -102,6 +102,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name'                  => 'namex',
+        'email'                 => 'eMail',
+        'password'              => 'password',
+        'password_confirmation' => 'password confirmation',
+        'remember_me'           => '"remember me" option',
+    ],
 
 ];
