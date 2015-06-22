@@ -18,8 +18,8 @@ class AuthControllerTest extends TestCase
     public function testGetLoginForm()
     {
         $this->visit('/auth/login-form')
-             ->see('eMail:')
-             ->see('Password:');
+             ->see(trans('auth.email_label'))
+             ->see(trans('auth.password_label'));
     }
 
     public function testPostInvalidLoginForm()
@@ -81,5 +81,9 @@ class AuthControllerTest extends TestCase
 
         $data = $this->post('/auth/login-form', $params, $headers);
         $this->assertEquals(200, $data->response->status(), "POST should result in success");
+        $this->assertTrue(
+            strpos($data->response->getContent(), "window.location.reload()") != false,
+            "Page should be reloaded"
+        );
     }
 }
