@@ -24,10 +24,13 @@ class AuthControllerTest extends TestCase
 
     public function testPostInvalidLoginForm()
     {
-        $this->withoutMiddleware();
         $headers = array('HTTP_X-Requested-With' => 'XMLHttpRequest');
+        $data = $this->get('/auth/login-form', [], $headers);
+        $token = $this->getToken($data->response->getContent());
 
-        $params = [];
+        $params = [
+            '_token'    => $token,
+        ];
 
         $data = $this->post('/auth/login-form', $params, $headers);
         $result = $data->response->getData(true);
@@ -44,6 +47,7 @@ class AuthControllerTest extends TestCase
         );
 
         $params = [
+            '_token'    => $token,
             'email'     => 'admin@example.com',
             'password'  => 'passwd',
         ];
@@ -59,10 +63,12 @@ class AuthControllerTest extends TestCase
 
     public function testPostValidLoginForm()
     {
-        $this->withoutMiddleware();
         $headers = array('HTTP_X-Requested-With' => 'XMLHttpRequest');
+        $data = $this->get('/auth/login-form', [], $headers);
+        $token = $this->getToken($data->response->getContent());
 
         $params = [
+            '_token'    => $token,
             'email'     => 'admin@example.com',
             'password'  => 'passwd',
         ];

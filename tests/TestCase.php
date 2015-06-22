@@ -22,4 +22,21 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    /**
+     * Extract token from HTML string
+     *
+     * @param string $content
+     * @return string
+     */
+    public function getToken($content)
+    {
+        $dom = new \DOMDocument();
+        $dom->loadHTML($content);
+
+        $xpath = new \DOMXPath($dom);
+        $tags = $xpath->query('//input[@name="_token"]');
+        $token = $tags->item(0)->getAttribute('value');
+        return $token;
+    }
 }
