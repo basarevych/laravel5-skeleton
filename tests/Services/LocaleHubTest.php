@@ -1,11 +1,5 @@
 <?php
 
-namespace Test\Services;
-
-use TestCase;
-use Config;
-use LocaleHub;
-
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

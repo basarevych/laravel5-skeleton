@@ -15,13 +15,13 @@ $factory->define(App\User::class, function ($faker) {
     return [
         'name'              => $faker->name,
         'email'             => $faker->email,
-        'password'          => str_random(10),
+        'password'          => $faker->password,
         'admin'             => false,
         'remember_token'    => str_random(10),
     ];
 });
 
-$factory->defineAs('App\User', 'admin', function ($faker) use ($factory) {
+$factory->defineAs(App\User::class, 'admin', function ($faker) use ($factory) {
     $user = $factory->raw('App\User');
 
     return array_merge($user, ['admin' => true]);
