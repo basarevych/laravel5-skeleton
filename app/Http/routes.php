@@ -18,22 +18,22 @@ Route::get('/', [ 'as' => 'index', function () { return view('welcome.index'); }
 Route::group([ 'prefix' => 'auth', 'as' => 'auth.' ], function () {
 
     // User login routes
-    Route::get('login-form', [ 'as' => 'login', 'uses' => 'AuthController@getLoginForm' ]);
-    Route::post('login-form', 'AuthController@postLoginForm');
-    Route::post('validate-login-form', 'AuthController@postValidateLoginForm');
+    Route::get('login-form', [ 'as' => 'login', 'uses' => 'Auth\AuthController@getLoginForm' ]);
+    Route::post('login-form', 'Auth\AuthController@postLoginForm');
+    Route::post('validate-login-form', 'Auth\AuthController@postValidateLoginForm');
 
     // User logout route
-    Route::get('logout', [ 'as' => 'logout', 'uses' => 'AuthController@getLogout' ]);
+    Route::get('logout', [ 'as' => 'logout', 'uses' => 'Auth\AuthController@getLogout' ]);
 
-    // Password reset link request routes
-    Route::get('reset-request-form', [ 'as' => 'reset-request', 'uses' => 'PasswordController@getResetRequestForm' ]);
-    Route::post('reset-request-form', 'PasswordController@postResetRequestForm');
-    Route::post('validate-request-form', 'PasswordController@postValidateRequestForm');
+    // Password reset request routes
+    Route::get('reset-request-form', [ 'as' => 'reset-request', 'uses' => 'Auth\PasswordController@getResetRequestForm' ]);
+    Route::post('reset-request-form', 'Auth\PasswordController@postResetRequestForm');
+    Route::post('validate-request-form', 'Auth\PasswordController@postValidateRequestForm');
 
-    // Password reset routes
-    Route::get('reset-confirm-form/{token}', [ 'as' => 'reset-confirm', 'uses' => 'PasswordController@getResetConfirmForm' ]);
-    Route::post('reset-confirm-form', 'PasswordController@postResetConfirmForm');
-    Route::post('validate-confirm-form', 'PasswordController@postValidateConfirmForm');
+    // Password reset confirmation routes
+    Route::get('reset-confirm-form/{token}', [ 'as' => 'reset-confirm', 'uses' => 'Auth\PasswordController@getResetConfirmForm' ]);
+    Route::post('reset-confirm-form', 'Auth\PasswordController@postResetConfirmForm');
+    Route::post('validate-confirm-form', 'Auth\PasswordController@postValidateConfirmForm');
 
 });
 
