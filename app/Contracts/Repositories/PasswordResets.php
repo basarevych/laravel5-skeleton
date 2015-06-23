@@ -2,7 +2,16 @@
 
 namespace App\Contracts\Repositories;
 
+use App\User;
+use App\PasswordReset;
+
 interface PasswordResets
 {
-    public function create(\App\User $user);
+    /**
+     * Create new password reset
+     *
+     * @param User $user
+     * @return PasswordReset
+     */
+    public function create(User $user);
 }

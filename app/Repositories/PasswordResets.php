@@ -4,12 +4,21 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\PasswordResets as RepositoryInterface;
 
+use App\User;
+use App\PasswordReset;
+
 class PasswordResets implements RepositoryInterface
 {
-    public function create(\App\User $user)
+    /**
+     * Create new password reset
+     *
+     * @param User $user
+     * @return PasswordReset
+     */
+    public function create(User $user)
     {
-        $reset = new \App\PasswordReset();
-        $reset->token = \App\PasswordReset::generateToken();
+        $reset = new PasswordReset();
+        $reset->token = PasswordReset::generateToken();
 
         $user->passwordResets()->save($reset);
 

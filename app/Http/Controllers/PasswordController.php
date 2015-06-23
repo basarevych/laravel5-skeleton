@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
 
-use App\Contracts\Repositories\PasswordResets;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Contracts\Repositories\PasswordResets;
+use App\Contracts\Repositories\Users;
 
 class PasswordController extends Controller
 {
+    /**
+     * Users repository
+     *
+     * @var Users
+     */
+    protected $users;
+
     /**
      * Password resets repository
      *
@@ -25,10 +33,12 @@ class PasswordController extends Controller
     /**
      * Constructor
      *
+     * @param Users $users
      * @param PasswordResets $passwordResets
      */
-    public function __construct(PasswordResets $passwordResets)
+    public function __construct(Users $users, PasswordResets $passwordResets)
     {
+        $this->users = $users;
         $this->passwordResets = $passwordResets;
     }
 
@@ -50,8 +60,9 @@ class PasswordController extends Controller
      */
     public function postResetRequestForm(Requests\RequestPasswordResetRequest $request)
     {
-        $user = \App\User::where('email', $request->input('email'))
-                           ->firstOrFail();
+        $user = $this->users->findByEmail($request->input('email'));
+        if (!$user)
+            abort(404, "User not found");
 
         $reset = $this->passwordResets->create($user);
 
