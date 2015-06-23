@@ -17,11 +17,23 @@ Route::get('/', [ 'as' => 'index', function () { return view('welcome.index'); }
 // Authentication routes
 Route::group([ 'prefix' => 'auth', 'as' => 'auth.' ], function () {
 
+    // User login routes
     Route::get('login-form', [ 'as' => 'login', 'uses' => 'AuthController@getLoginForm' ]);
     Route::post('login-form', 'AuthController@postLoginForm');
     Route::post('validate-login-form', 'AuthController@postValidateLoginForm');
 
+    // User logout route
     Route::get('logout', [ 'as' => 'logout', 'uses' => 'AuthController@getLogout' ]);
+
+    // Password reset link request routes
+    Route::get('reset-request-form', [ 'as' => 'reset-request', 'uses' => 'PasswordController@getResetRequestForm' ]);
+    Route::post('reset-request-form', 'PasswordController@postResetRequestForm');
+    Route::post('validate-request-form', 'PasswordController@postValidateRequestForm');
+
+    // Password reset routes
+    Route::get('reset-confirm-form/{token}', [ 'as' => 'reset-confirm', 'uses' => 'PasswordController@getResetConfirmForm' ]);
+    Route::post('reset-confirm-form', 'PasswordController@postResetConfirmForm');
+    Route::post('validate-confirm-form', 'PasswordController@postValidateConfirmForm');
 
 });
 

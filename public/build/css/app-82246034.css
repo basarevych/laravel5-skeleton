@@ -6526,9 +6526,12 @@ body.with-centered-container .jumbotron {
   vertical-align: super;
   font-size: 65%;
 }
+.modal-footer .footer-text {
+  float: left;
+}
 .modal-footer .spinner {
   display: none;
-  float: left;
+  float: right;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -6,6 +6,7 @@ function bsAlert(msg, title, cb) {
     if (typeof title != 'undefined')
         modal.find('.modal-title').text(title);
     modal.find('.modal-body').html(msg);
+    modal.find('.modal-footer .footer-text').hide();
     modal.find('.modal-footer .spinner').hide();
     modal.find('button[type="submit"]').hide();
     modal.one('hide.bs.modal', function() {
@@ -54,20 +55,16 @@ function setFormFocus(form) {
 */
 function runModalForm(modal) {
     var spinner = modal.find('.modal-footer .spinner'),
-        button = modal.find('button[type=submit]');
+        buttons = modal.find('.modal-footer button');
 
     spinner.hide();
 
-    button
-        .removeClass('disabled')
-        .prop('disabled', false)
+    modal.find('.modal-footer button[type=submit]')
+        .show()
         .off('click')
         .on('click', function () {
+            buttons.hide();
             spinner.show();
-
-            $(this)
-                .addClass('disabled')
-                .prop('disabled', true);
 
             modal.find('form').ajaxSubmit({ // jQuery form plugin
                 success: function (data) {
@@ -76,8 +73,7 @@ function runModalForm(modal) {
                 statusCode: {
                     422: function (data) {
                         spinner.hide();
-                        button.removeClass('disabled')
-                              .prop('disabled', false);
+                        buttons.show();
 
                         var form = modal.find('form');
                         form.serializeArray().forEach(function (field) {

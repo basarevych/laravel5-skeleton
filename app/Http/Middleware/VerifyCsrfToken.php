@@ -13,6 +13,8 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         'auth/validate-login-form',
+        'auth/validate-request-form',
+        'auth/validate-confirm-form',
         'validate-profile-form',
     ];
 }

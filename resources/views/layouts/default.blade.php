@@ -110,6 +110,7 @@
                     <div class="modal-body">
                     </div>
                     <div class="modal-footer">
+                        <div class="footer-text"></div>
                         <img src="{{ asset('/img/loader.gif') }}" class="spinner">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             {{ trans('messages.cancel') }}

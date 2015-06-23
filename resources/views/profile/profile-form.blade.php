@@ -70,6 +70,7 @@
 
     modal.find('.modal-title').text('{{ trans('profile.profile_title') }}');
     modal.find('button[type=submit]').show().text('{{ trans('profile.profile_submit') }}');
+    modal.find('.modal-footer .footer-text').hide();
 
     runModalForm(modal);
 </script>

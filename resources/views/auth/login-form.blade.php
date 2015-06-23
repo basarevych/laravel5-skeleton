@@ -56,6 +56,9 @@
 
     modal.find('.modal-title').text('{{ trans('auth.auth_title') }}');
     modal.find('button[type=submit]').show().text('{{ trans('auth.login_submit') }}');
+    modal.find('.modal-footer .footer-text').show().html(
+        "<a href=\"javascript:$('#modal-form').modal('hide');openModalForm('{{ url('/auth/reset-request-form') }}')\">{{ trans('auth.reset_link') }}</a>"
+    );
 
     runModalForm(modal);
 </script>
