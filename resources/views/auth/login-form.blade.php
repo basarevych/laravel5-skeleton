@@ -30,7 +30,7 @@
             </span>
         </label>
         <div class="col-sm-8">
-            <input class="form-control" type="password" name="password" value="{{ old('password') }}"
+            <input class="form-control" type="password" name="password"
                    data-on-blur="validateFormField($('#modal-form [name=password]'), '{{ url('auth/validate-login-form') }}')"
                    data-on-enter="$('#modal-form [name=remember_me]').focus()">
             <div class="help-block"></div>

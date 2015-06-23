@@ -83,13 +83,71 @@ class PasswordController extends Controller
     }
 
     /**
-     * Validate login form field
+     * Validate password reset request form field
      *
      * @return Response
      */
     public function postValidateRequestForm(Request $request)
     {
         $rules = (new Requests\RequestPasswordResetRequest)->rules();
+        $field = $request->input('field');
+        $form = $request->input('form');
+
+        $validator = Validator::make($form, $rules);
+        $messages = $validator->messages()->toArray();
+        if (isset($messages[$field]))
+            return response()->json([ 'valid' => false, 'errors' => $messages[$field] ]);
+
+        return response()->json([ 'valid' => true, 'errors' => [] ]);
+    }
+
+    /**
+     * Display password reset confirmation page
+     *
+     * @return Response
+     */
+    public function getResetConfirm($token)
+    {
+        return view('password.reset-confirm', [ 'token' => $token ]);
+    }
+
+    /**
+     * Display password reset confirmation form
+     *
+     * @return Response
+     */
+    public function getResetConfirmForm($token)
+    {
+        return view('password.reset-confirm-form', [ 'token' => $token ]);
+    }
+
+    /**
+     * Process password reset confirmation form
+     *
+     * @param \App\Http\Requests\ConfirmPasswordResetRequest $request
+     * @return Response
+     */
+    public function postResetConfirmForm(Requests\ConfirmPasswordResetRequest $request)
+    {
+        $reset = $this->passwordResets->findByToken($request->input('reset_token'));
+        if (!$reset)
+            abort(404, "Reset token is invalid");
+
+        $user = $reset->user()->first();
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
+
+        return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide'); window.location = '" . url('/') . "'" ]);
+    }
+
+    /**
+     * Validate password reset confirmation form field
+     *
+     * @return Response
+     */
+    public function postValidateConfirmForm(Request $request)
+    {
+        $rules = (new Requests\ConfirmPasswordResetRequest)->rules();
         $field = $request->input('field');
         $form = $request->input('form');
 

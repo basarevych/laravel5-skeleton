@@ -31,7 +31,8 @@ Route::group([ 'prefix' => 'auth', 'as' => 'auth.' ], function () {
     Route::post('validate-request-form', 'Auth\PasswordController@postValidateRequestForm');
 
     // Password reset confirmation routes
-    Route::get('reset-confirm-form/{token}', [ 'as' => 'reset-confirm', 'uses' => 'Auth\PasswordController@getResetConfirmForm' ]);
+    Route::get('reset-confirm/{token}', [ 'as' => 'reset-confirm', 'uses' => 'Auth\PasswordController@getResetConfirm' ]);
+    Route::get('reset-confirm-form/{token}', 'Auth\PasswordController@getResetConfirmForm');
     Route::post('reset-confirm-form', 'Auth\PasswordController@postResetConfirmForm');
     Route::post('validate-confirm-form', 'Auth\PasswordController@postValidateConfirmForm');
 

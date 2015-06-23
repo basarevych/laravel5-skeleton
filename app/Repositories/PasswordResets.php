@@ -10,6 +10,20 @@ use App\PasswordReset;
 class PasswordResets implements RepositoryInterface
 {
     /**
+     * Find the entity by token
+     *
+     * @param string $token
+     * @return PasswordReset
+     */
+    public function findByToken($token)
+    {
+        $reset = PasswordReset::where('token', $token)
+                                ->first();
+
+        return $reset;
+    }
+
+    /**
      * Create new password reset
      *
      * @param User $user
