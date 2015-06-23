@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class LoginRequest extends Request
+class ConfirmPasswordResetRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class LoginRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,8 +24,8 @@ class LoginRequest extends Request
     public function rules()
     {
         return [
-            'email'     => 'required|max:255|email',
-            'password'  => 'required|min:6|max:255',
+            'password'              => 'required|min:6|max:255|confirmed',
+            'password_confirmation' => 'required|min:6|max:255',
         ];
     }
 }
