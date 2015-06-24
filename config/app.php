@@ -172,6 +172,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoriesServiceProvider::class,
         App\Providers\LocaleHubServiceProvider::class,
+        App\Providers\ReCaptchaServiceProvider::class,
 
     ],
 
@@ -228,6 +229,7 @@ return [
          * Application aliases...
          */
         'LocaleHub' => App\Facades\LocaleHub::class,
+        'ReCaptcha' => App\Facades\ReCaptcha::class,
 
     ],
 
