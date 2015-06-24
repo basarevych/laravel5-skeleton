@@ -39,8 +39,12 @@ class AuthController extends Controller
             $request->input('remember_me') == '1'
         );
 
-        if ($attempt)
-            return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide'); window.location.reload()" ]);
+        if ($attempt) {
+            return view(
+                'layouts/script',
+                [ 'script' => "$('#modal-form').modal('hide'); window.location.reload()" ]
+            );
+        }
 
         return redirect('auth/login-form')->withInput()
                                           ->with('message', trans('auth.invalid_credentials'));

@@ -38,4 +38,17 @@ class PasswordResets implements RepositoryInterface
 
         return $reset;
     }
+
+    /**
+     * Delete expired resets
+     *
+     * @return PasswordReset
+     */
+    public function deleteExpired()
+    {
+        $date = new \DateTime();
+        $date->sub(new \DateInterval('PT' . (config('auth.password.expire') * 60) . 'S'));
+        $resets = PasswordReset::where('updated_at', '<', $date)
+                                 ->delete();
+    }
 }

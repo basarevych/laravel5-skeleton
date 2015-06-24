@@ -22,4 +22,11 @@ interface PasswordResets
      * @return PasswordReset
      */
     public function create(User $user);
+
+    /**
+     * Delete expired resets
+     *
+     * @return PasswordReset
+     */
+    public function deleteExpired();
 }

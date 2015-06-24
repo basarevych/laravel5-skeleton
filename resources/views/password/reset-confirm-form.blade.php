@@ -17,7 +17,7 @@
         </label>
         <div class="col-sm-8">
             <input class="form-control" type="password" name="password"
-                   data-on-blur="validatePasswords()"
+                   data-on-blur="validateFormField($('#modal-form [name=password]'), '{{ url('auth/validate-confirm-form') }}');"
                    data-on-enter="$('#modal-form [name=password_confirmation]').focus()">
             <div class="help-block"></div>
         </div>
@@ -47,9 +47,13 @@
 
     var modal = $('#modal-form');
 
-    modal.find('.modal-title').text('{{ trans('password.confirm_title') }}');
-    modal.find('button[type=submit]').show().text('{{ trans('password.confirm_submit') }}');
+    modal.find('.modal-title').text("{{ trans('password.confirm_title') }}");
     modal.find('.modal-footer .footer-text').hide();
+    modal.find('.modal-footer .spinner').hide();
+    modal.find('.modal-footer .buttons').show();
+    modal.find('button.form-cancel').show();
+    modal.find('button.form-close').hide();
+    modal.find('button.form-submit').show().text("{{ trans('password.confirm_submit') }}");
 
     runModalForm(modal);
 </script>

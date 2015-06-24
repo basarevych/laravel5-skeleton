@@ -68,8 +68,13 @@
 
     var modal = $('#modal-form');
 
-    modal.find('.modal-title').text('{{ trans('profile.profile_title') }}');
-    modal.find('button[type=submit]').show().text('{{ trans('profile.profile_submit') }}');
+    modal.find('.modal-title').text("{{ trans('profile.profile_title') }}");
+    modal.find('.modal-footer .footer-text').hide();
+    modal.find('.modal-footer .spinner').hide();
+    modal.find('.modal-footer .buttons').show();
+    modal.find('button.form-cancel').show();
+    modal.find('button.form-close').hide();
+    modal.find('button.form-submit').show().text("{{ trans('profile.profile_submit') }}");
     modal.find('.modal-footer .footer-text').hide();
 
     runModalForm(modal);

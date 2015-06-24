@@ -8,7 +8,10 @@ function bsAlert(msg, title, cb) {
     modal.find('.modal-body').html(msg);
     modal.find('.modal-footer .footer-text').hide();
     modal.find('.modal-footer .spinner').hide();
-    modal.find('button[type="submit"]').hide();
+    modal.find('.modal-footer .buttons').show();
+    modal.find('button.form-cancel').hide();
+    modal.find('button.form-close').show();
+    modal.find('button.form-submit').hide();
     modal.one('hide.bs.modal', function() {
         if (typeof cb != 'undefined')
             cb();
@@ -55,11 +58,11 @@ function setFormFocus(form) {
 */
 function runModalForm(modal) {
     var spinner = modal.find('.modal-footer .spinner'),
-        buttons = modal.find('.modal-footer button');
+        buttons = modal.find('.modal-footer .buttons');
 
     spinner.hide();
 
-    modal.find('.modal-footer button[type=submit]')
+    modal.find('.modal-footer button.form-submit')
         .show()
         .off('click')
         .on('click', function () {

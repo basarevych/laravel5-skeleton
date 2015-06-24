@@ -21,6 +21,7 @@ return [
     "profile"           => "Profile",
 
     // Forms
+    "close"             => "Close",
     "cancel"            => "Cancel",
     "submit"            => "Submit",
     "required_field"    => "REQUIRED FIELD",

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Validator;
 use Mail;
+use Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -61,8 +62,12 @@ class PasswordController extends Controller
     public function postResetRequestForm(Requests\RequestPasswordResetRequest $request)
     {
         $user = $this->users->findByEmail($request->input('email'));
-        if (!$user)
-            abort(404, "User not found");
+        if (!$user) {
+            return redirect('auth/reset-request-form')->withInput()
+                                                      ->with('message', trans('password.invalid_user'));
+        }
+
+        $this->passwordResets->deleteExpired();
 
         $reset = $this->passwordResets->create($user);
 
@@ -79,7 +84,12 @@ class PasswordController extends Controller
             }
         );
 
-        return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide');" ]);
+        $msg = trans('password.email_sent_text');
+        $title = trans('password.email_sent_title');
+        return view(
+            'layouts/script',
+            [ 'script' => "$('#modal-form').modal('hide'); bsAlert(\"$msg\", \"$title\")" ]
+        );
     }
 
     /**
@@ -108,7 +118,8 @@ class PasswordController extends Controller
      */
     public function getResetConfirm($token)
     {
-        return view('password.reset-confirm', [ 'token' => $token ]);
+        $reset = $this->passwordResets->findByToken($token);
+        return view('password.reset-confirm', [ 'token' => $token, 'expired' => ($reset == null) ]);
     }
 
     /**
@@ -129,13 +140,21 @@ class PasswordController extends Controller
      */
     public function postResetConfirmForm(Requests\ConfirmPasswordResetRequest $request)
     {
+        $this->passwordResets->deleteExpired();
+
         $reset = $this->passwordResets->findByToken($request->input('reset_token'));
-        if (!$reset)
-            abort(404, "Reset token is invalid");
+        if (!$reset) {
+            return redirect('auth/reset-confirm-form/' . $request->input('reset_token'))
+                      ->withInput()
+                      ->with('message', trans('password.invalid_token'));
+        }
 
         $user = $reset->user()->first();
         $user->password = bcrypt($request->input('password'));
         $user->save();
+        $reset->delete();
+
+        Auth::login($user);
 
         return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide'); window.location = '" . url('/') . "'" ]);
     }

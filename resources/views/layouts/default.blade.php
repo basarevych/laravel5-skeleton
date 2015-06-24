@@ -98,8 +98,6 @@
             </div>
         </nav>
 
-        @yield('content')
-
         <div id="modal-form" class="modal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -112,15 +110,23 @@
                     <div class="modal-footer">
                         <div class="footer-text"></div>
                         <img src="{{ asset('/img/loader.gif') }}" class="spinner">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            {{ trans('messages.cancel') }}
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            {{ trans('messages.submit') }}
-                        </button>
+                        <div class="buttons">
+                            <button type="button" class="form-cancel btn btn-default" data-dismiss="modal">
+                                {{ trans('messages.cancel') }}
+                            </button>
+                            <button type="button" class="form-close btn btn-default" data-dismiss="modal">
+                                {{ trans('messages.close') }}
+                            </button>
+                            <button type="submit" class="form-submit btn btn-primary">
+                                {{ trans('messages.submit') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        @yield('content')
+
     </body>
 </html>

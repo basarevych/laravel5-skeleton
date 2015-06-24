@@ -4,9 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\BaseModel;
-
-class PasswordReset extends BaseModel
+class PasswordReset extends Model
 {
     /**
      * The database table used by the model.
