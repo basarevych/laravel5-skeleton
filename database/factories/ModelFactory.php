@@ -26,3 +26,9 @@ $factory->defineAs(App\User::class, 'admin', function ($faker) use ($factory) {
 
     return array_merge($user, ['admin' => true]);
 });
+
+$factory->define(App\PasswordReset::class, function ($faker) {
+    return [
+        'token' => str_random(10),
+    ];
+});
