@@ -32,7 +32,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     public function getToken($content)
     {
         $dom = new \DOMDocument();
-        $dom->loadHTML($content);
+        @$dom->loadHTML($content);
 
         $xpath = new \DOMXPath($dom);
         $tags = $xpath->query('//input[@name="_token"]');

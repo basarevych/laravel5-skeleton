@@ -8,13 +8,6 @@ class AuthControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
-    {
-        $_SERVER['X_Requested_With'] = 'XMLHttpRequest';
-
-        parent::setUp();
-    }
-
     public function testGetLoginForm()
     {
         $this->visit('/auth/login-form')
