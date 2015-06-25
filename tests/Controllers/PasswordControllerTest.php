@@ -8,6 +8,14 @@ class PasswordControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        Config::set('recaptcha.site_key', null);
+        Config::set('recaptcha.secret', null);
+    }
+
     public function testGetResetRequestForm()
     {
         $this->visit('auth/reset-request-form')

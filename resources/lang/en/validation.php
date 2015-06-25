@@ -73,6 +73,7 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
+    'recaptcha'            => 'The :attribute is invalid.',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,6 +109,7 @@ return [
         'password'              => 'password',
         'password_confirmation' => 'password confirmation',
         'remember_me'           => '"remember me"',
+        'g-recaptcha-response'  => 'captcha',
     ],
 
 ];

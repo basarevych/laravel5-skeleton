@@ -26,6 +26,7 @@
         <div class="form-group">
             <div class="col-sm-offset-4 col-sm-8">
                 {!! ReCaptcha::getFormElement() !!}
+                <div class="help-block"></div>
             </div>
         </div>
     @endif

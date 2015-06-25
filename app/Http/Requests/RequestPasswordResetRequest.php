@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use ReCaptcha;
+
 use App\Http\Requests\Request;
 
 class RequestPasswordResetRequest extends Request
@@ -23,8 +25,13 @@ class RequestPasswordResetRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'email'     => 'required|max:255|email|exists:users,email',
         ];
+
+        if (ReCaptcha::isEnabled())
+            $rules['g-recaptcha-response'] = 'required|recaptcha';
+
+        return $rules;
     }
 }
