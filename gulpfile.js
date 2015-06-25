@@ -27,7 +27,5 @@ elixir(function(mix) {
         'public/js/app.js'
     );
 
-    mix.version([ "css/app.css", "js/app.js" ]);
-
-    mix.copy("resources/assets/bower_components/bootstrap/fonts", "public/build/fonts");
+    mix.copy("resources/assets/bower_components/bootstrap/fonts", "public/fonts");
 });
