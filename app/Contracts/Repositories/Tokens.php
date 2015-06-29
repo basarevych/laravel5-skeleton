@@ -3,30 +3,31 @@
 namespace App\Contracts\Repositories;
 
 use App\User;
-use App\PasswordReset;
+use App\Token;
 
-interface PasswordResets
+interface Tokens
 {
     /**
      * Find the entity by token
      *
      * @param string $token
-     * @return PasswordReset
+     * @return Token
      */
     public function findByToken($token);
 
     /**
-     * Create new password reset
+     * Create new token
      *
      * @param User $user
-     * @return PasswordReset
+     * @param string $type
+     * @return Token
      */
-    public function create(User $user);
+    public function create(User $user, $type);
 
     /**
-     * Delete expired resets
+     * Delete expired tokens
      *
-     * @return PasswordReset
+     * @return Token
      */
     public function deleteExpired();
 }

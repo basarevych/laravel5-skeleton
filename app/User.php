@@ -36,8 +36,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Get the password resets
      */
-    public function passwordResets()
+    public function tokens()
     {
-        return $this->hasMany('App\PasswordReset');
+        return $this->hasMany('App\Token');
     }
 }

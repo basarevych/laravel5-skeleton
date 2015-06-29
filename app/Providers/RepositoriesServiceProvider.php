@@ -24,6 +24,6 @@ class RepositoriesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Contracts\Repositories\Users', 'App\Repositories\Users');
-        $this->app->bind('App\Contracts\Repositories\PasswordResets', 'App\Repositories\PasswordResets');
+        $this->app->bind('App\Contracts\Repositories\Tokens', 'App\Repositories\Tokens');
     }
 }

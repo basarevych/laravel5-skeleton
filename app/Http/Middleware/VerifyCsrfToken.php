@@ -15,6 +15,7 @@ class VerifyCsrfToken extends BaseVerifier
         'auth/validate-login-form',
         'auth/validate-request-form',
         'auth/validate-confirm-form',
+        'auth/validate-registration-form',
         'validate-profile-form',
     ];
 }

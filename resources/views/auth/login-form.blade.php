@@ -54,13 +54,13 @@
 <script>
     var modal = $('#modal-form');
 
-    modal.find('.modal-title').text("{{ trans('auth.auth_title') }}");
+    modal.find('.modal-title').text("{{ trans('auth.form_title') }}");
     modal.find('.modal-footer .footer-text').hide();
     modal.find('.modal-footer .spinner').hide();
     modal.find('.modal-footer .buttons').show();
     modal.find('button.form-cancel').show();
     modal.find('button.form-close').hide();
-    modal.find('button.form-submit').show().text("{{ trans('auth.login_submit') }}");
+    modal.find('button.form-submit').show().text("{{ trans('auth.form_submit') }}");
     modal.find('.modal-footer .footer-text').show().html(
         "<a href=\"javascript:$('#modal-form').modal('hide');openModalForm('{{ url('/auth/reset-request-form') }}')\">{{ trans('auth.reset_link') }}</a>"
     );

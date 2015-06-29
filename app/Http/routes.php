@@ -36,6 +36,12 @@ Route::group([ 'prefix' => 'auth', 'as' => 'auth.' ], function () {
     Route::post('reset-confirm-form', 'Auth\PasswordController@postResetConfirmForm');
     Route::post('validate-confirm-form', 'Auth\PasswordController@postValidateConfirmForm');
 
+    // User registration routes
+    Route::get('registration/{token}', [ 'as' => 'register', 'uses' => 'Auth\RegistrationController@getRegistration' ]);
+    Route::get('registration-form', 'Auth\RegistrationController@getRegistrationForm');
+    Route::post('registration-form', 'Auth\RegistrationController@postRegistrationForm');
+    Route::post('validate-registration-form', 'Auth\RegistrationController@postValidateRegistrationForm');
+
 });
 
 // These routes require authenticated user

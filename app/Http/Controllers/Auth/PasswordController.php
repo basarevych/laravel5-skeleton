@@ -10,10 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
 
+use App\User;
+use App\Token;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Contracts\Repositories\PasswordResets;
 use App\Contracts\Repositories\Users;
+use App\Contracts\Repositories\Tokens;
 
 class PasswordController extends Controller
 {
@@ -25,22 +27,22 @@ class PasswordController extends Controller
     protected $users;
 
     /**
-     * Password resets repository
+     * Tokens repository
      *
-     * @var PasswordResets
+     * @var Tokens
      */
-    protected $passwordResets;
+    protected $tokens;
 
     /**
      * Constructor
      *
      * @param Users $users
-     * @param PasswordResets $passwordResets
+     * @param Tokens $tokens
      */
-    public function __construct(Users $users, PasswordResets $passwordResets)
+    public function __construct(Users $users, Tokens $tokens)
     {
         $this->users = $users;
-        $this->passwordResets = $passwordResets;
+        $this->tokens = $tokens;
     }
 
     /**
@@ -67,20 +69,18 @@ class PasswordController extends Controller
                                                       ->with('message', trans('password.invalid_user'));
         }
 
-        $this->passwordResets->deleteExpired();
-
-        $reset = $this->passwordResets->create($user);
+        $token = $this->tokens->create($user, Token::TYPE_PASSWORD_RESET);
 
         Mail::send(
-            [ 'html' => 'emails.password' ],
+            [ 'html' => config('auth.password.email') ],
             [
                 'user'  => $user,
-                'reset' => $reset,
+                'token' => $token,
             ],
             function ($message) use ($user)
             {
                 $message->to($user->email, $user->name)
-                        ->subject(trans('password.request_email_title'));
+                        ->subject(trans('password.email_title'));
             }
         );
 
@@ -118,8 +118,12 @@ class PasswordController extends Controller
      */
     public function getResetConfirm($token)
     {
-        $reset = $this->passwordResets->findByToken($token);
-        return view('password.reset-confirm', [ 'token' => $token, 'expired' => ($reset == null) ]);
+        $expired = true;
+        $model = $this->tokens->findByToken($token);
+        if ($model && $model->type == Token::TYPE_PASSWORD_RESET)
+            $expired = false;
+
+        return view('password.reset-confirm', [ 'token' => $token, 'expired' => $expired ]);
     }
 
     /**
@@ -140,19 +144,17 @@ class PasswordController extends Controller
      */
     public function postResetConfirmForm(Requests\ConfirmPasswordResetRequest $request)
     {
-        $this->passwordResets->deleteExpired();
-
-        $reset = $this->passwordResets->findByToken($request->input('reset_token'));
-        if (!$reset) {
+        $token = $this->tokens->findByToken($request->input('reset_token'));
+        if (!$token || $token->type != Token::TYPE_PASSWORD_RESET) {
             return redirect('auth/reset-confirm-form/' . $request->input('reset_token'))
                       ->withInput()
                       ->with('message', trans('password.invalid_token'));
         }
 
-        $user = $reset->user()->first();
+        $user = $token->user()->first();
         $user->password = bcrypt($request->input('password'));
         $user->save();
-        $reset->delete();
+        $token->delete();
 
         Auth::login($user);
 

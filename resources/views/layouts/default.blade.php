@@ -49,6 +49,12 @@
                             </ul>
                         </div>
                     @else
+                        @if (config('auth.registration.enable'))
+                            <button type="button" class="btn btn-default navbar-btn navbar-right navbar-margin" onclick="openModalForm('{{ url('/auth/registration-form') }}')">
+                                {{ trans('messages.sign_up') }}
+                            </button>
+                        @endif
+
                         <button type="button" class="btn btn-default navbar-btn navbar-right" onclick="openModalForm('{{ url('/auth/login-form') }}')">
                             {{ trans('messages.sign_in') }}
                         </button>

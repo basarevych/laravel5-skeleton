@@ -8,11 +8,30 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Contracts\Repositories\Users;
 
 class AuthController extends Controller
 {
+    /**
+     * Users repository
+     *
+     * @var Users
+     */
+    protected $users;
+
+    /**
+     * Constructor
+     *
+     * @param Users $users
+     */
+    public function __construct(Users $users)
+    {
+        $this->users = $users;
+    }
+
     /**
      * Display login form
      *
@@ -31,10 +50,17 @@ class AuthController extends Controller
      */
     public function postLoginForm(Requests\LoginRequest $request)
     {
+        $user = $this->users->findByEmail($request->input('email'));
+        if ($user && !$user->active) {
+            return redirect('auth/login-form')->withInput()
+                                              ->with('message', trans('auth.user_disabled'));
+        }
+
         $attempt = Auth::attempt(
             [
                 'email' => $request->input('email'),
-                'password' => $request->input('password')
+                'password' => $request->input('password'),
+                'active' => true,
             ],
             $request->input('remember_me') == '1'
         );

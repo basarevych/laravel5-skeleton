@@ -21,4 +21,25 @@ class Users implements RepositoryInterface
 
         return $user;
     }
+
+    /**
+     * Create new user
+     *
+     * @param array $data
+     * @param boolean $active
+     * @param boolean $admin
+     * @return User
+     */
+    public function create($data, $active = false, $admin = false)
+    {
+        $user = new User();
+        $user->name = isset($data['name']) ? $data['name'] : null;
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);
+        $user->active = $active;
+        $user->admin = $admin;
+        $user->save();
+
+        return $user;
+    }
 }

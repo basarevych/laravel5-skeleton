@@ -4,14 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PasswordReset extends Model
+class Token extends Model
 {
+    /**
+     * Token types
+     *
+     * @const TYPE_PASSWORD_RESET
+     * @const TYPE_REGISTRATION
+     */
+    const TYPE_PASSWORD_RESET = 'password-reset';
+    const TYPE_REGISTRATION = 'registration';
+
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'password_resets';
+    protected $table = 'tokens';
 
     /**
      * The attributes that are mass assignable.

@@ -6498,6 +6498,9 @@ body.with-centered-container .jumbotron {
   text-align: center;
   display: inline-block;
 }
+.navbar-margin {
+  margin-left: 10px;
+}
 .icon-list li {
   padding: 0 0 5px 20px;
   display: block;

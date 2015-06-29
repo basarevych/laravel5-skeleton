@@ -14,7 +14,6 @@ return [
     "request_title"         => "Reset password",
     "email_label"           => "eMail",
     "request_submit"        => "Submit",
-    "request_email_title"   => "Laravel Skeleton password reset",
     "request_failure"       => "We cannot process your request right now",
     "invalid_user"          => "User not found",
 
@@ -24,6 +23,7 @@ return [
     "confirm_submit"        => "Submit",
     "invalid_token"         => "This link has expired",
 
+    "email_title"           => "Password reset",
     "email_sent_title"      => "Reset password",
     "email_sent_text"       => "Password reset link has been sent!",
 

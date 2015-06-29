@@ -27,7 +27,7 @@ class ProfileRequest extends Request
     {
         return [
             'name'                  => 'max:255',
-            'email'                 => 'required|max:255|email',
+            'email'                 => 'required|max:255|email|unique:users,email,' . Auth::user()->id,
             'password'              => 'min:6|max:255|confirmed|required_with:password_confirmation',
             'password_confirmation' => 'min:6|max:255|required_with:password',
         ];

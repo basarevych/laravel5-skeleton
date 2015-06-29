@@ -4,6 +4,9 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use App\User;
+use App\Token;
+
 class PasswordControllerTest extends TestCase
 {
     use DatabaseMigrations;
@@ -79,7 +82,7 @@ class PasswordControllerTest extends TestCase
         $token = $this->getToken($data->response->getContent());
 
         Mail::shouldReceive('send')
-              ->once();
+            ->once();
 
         $params = [
             '_token'    => $token,
@@ -105,11 +108,9 @@ class PasswordControllerTest extends TestCase
 
     public function testGetValidResetConfirm()
     {
-        $reset = factory(App\PasswordReset::class)
-                    ->make();
-        $user = factory(App\User::class)
-                    ->create();
-        $user->passwordResets()->save($reset);
+        $reset = factory(App\Token::class, Token::TYPE_PASSWORD_RESET)->make();
+        $user = factory(App\User::class)->create();
+        $user->tokens()->save($reset);
 
         $data = $this->get('auth/reset-confirm/' . $reset->token);
         $this->assertTrue(
@@ -120,11 +121,9 @@ class PasswordControllerTest extends TestCase
 
     public function testGetResetConfirmForm()
     {
-        $reset = factory(App\PasswordReset::class)
-                    ->make();
-        $user = factory(App\User::class)
-                    ->create();
-        $user->passwordResets()->save($reset);
+        $reset = factory(App\Token::class, Token::TYPE_PASSWORD_RESET)->make();
+        $user = factory(App\User::class)->create();
+        $user->tokens()->save($reset);
 
         $this->visit('auth/reset-confirm-form/' . $reset->token)
              ->see(trans('password.password1_label'))
@@ -133,11 +132,9 @@ class PasswordControllerTest extends TestCase
 
     public function testPostInvalidResetConfirmForm()
     {
-        $reset = factory(App\PasswordReset::class)
-                    ->make();
-        $user = factory(App\User::class)
-                    ->create();
-        $user->passwordResets()->save($reset);
+        $reset = factory(App\Token::class, Token::TYPE_PASSWORD_RESET)->make();
+        $user = factory(App\User::class)->create();
+        $user->tokens()->save($reset);
 
         $headers = array('HTTP_X-Requested-With' => 'XMLHttpRequest');
         $data = $this->get('auth/reset-confirm-form/' . $reset->token, [], $headers);
@@ -181,11 +178,9 @@ class PasswordControllerTest extends TestCase
 
     public function testPostValidResetConfirmForm()
     {
-        $reset = factory(App\PasswordReset::class)
-                    ->make();
-        $user = factory(App\User::class)
-                    ->create([ 'email' => 'admin@example.com' ]);
-        $user->passwordResets()->save($reset);
+        $reset = factory(App\Token::class, Token::TYPE_PASSWORD_RESET)->make();
+        $user = factory(App\User::class)->create([ 'email' => 'admin@example.com' ]);
+        $user->tokens()->save($reset);
 
         $headers = array('HTTP_X-Requested-With' => 'XMLHttpRequest');
         $data = $this->get('auth/reset-confirm-form/' . $reset->token, [], $headers);

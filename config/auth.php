@@ -49,8 +49,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may set the options for resetting passwords including the view
-    | that is your password reset e-mail. You can also set the name of the
-    | table that maintains all of the reset tokens for your application.
+    | that is your password reset e-mail.
     |
     | The expire time is the number of minutes that the reset token should be
     | considered valid. This security feature keeps tokens short-lived so
@@ -60,8 +59,29 @@ return [
 
     'password' => [
         'email' => 'emails.password',
-        'table' => 'password_resets',
         'expire' => 60,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Registration Settings
+    |--------------------------------------------------------------------------
+    |
+    | User registration parameters
+    |
+    | Set 'confirm' to true if you want the user to confirm their email address
+    | by visiting a link they will be sent. If 'confirm' is false then the
+    | account will be activated immediately.
+    |
+    | Parameter 'expire' is in minutes.
+    |
+    */
+
+    'registration' => [
+        'enable'    => true,
+        'confirm'   => true,
+        'email'     => 'emails.registration',
+        'expire'    => 60,
     ],
 
 ];
