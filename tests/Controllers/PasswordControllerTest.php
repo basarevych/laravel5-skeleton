@@ -203,5 +203,10 @@ class PasswordControllerTest extends TestCase
             Auth::once([ 'email' => 'admin@example.com', 'password' => 'string 1' ]),
             "Password should be changed"
         );
+        $this->assertEquals(
+            0,
+            count(App\Token::all()),
+            "No tokens should remain"
+        );
     }
 }

@@ -52,6 +52,22 @@ class AuthControllerTest extends TestCase
             session('message'),
             "Invalid credentials should be rejected"
         );
+
+        $user = factory(App\User::class)->create([
+            'name'      => 'Admin',
+            'email'     => $params['email'],
+            'password'  => bcrypt($params['password']),
+        ]);
+        $user->active = false;
+        $user->save();
+
+        $data = $this->post('/auth/login-form', $params, $headers);
+        $this->assertEquals(302, $data->response->status(), "POST should result in redirect");
+        $this->assertEquals(
+            trans('auth.user_disabled'),
+            session('message'),
+            "Disabled user should be rejected"
+        );
     }
 
     public function testPostValidLoginForm()
