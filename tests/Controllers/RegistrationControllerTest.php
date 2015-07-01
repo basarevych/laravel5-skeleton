@@ -128,6 +128,9 @@ class RegistrationControllerTest extends TestCase
             'password_confirmation' => 'string 1',
         ];
 
+        Mail::shouldReceive('send')
+            ->once();
+
         $data = $this->post('auth/registration-form', $params, $headers);
         $user = App\User::all()->first();
         $token = App\Token::all()->first();
