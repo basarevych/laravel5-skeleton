@@ -101,6 +101,9 @@ describe("Modal form", function() {
             var func = params.statusCode['422'];
             func({ responseJSON: { field: [ 'MESSAGE' ] }});
 
+            expect(spinner).toHaveCss({ display: 'none' });
+            expect(buttons).not.toHaveCss({ display: 'none' });
+
             var group = $('#field').closest('.form-group');
             expect(group).toHaveClass('has-error');
             expect(group.find('.help-block li')).toHaveText('MESSAGE');
