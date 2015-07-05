@@ -58,7 +58,7 @@ class AuthControllerTest extends TestCase
             'email'     => $params['email'],
             'password'  => bcrypt($params['password']),
         ]);
-        $user->active = false;
+        $user->is_active = false;
         $user->save();
 
         $data = $this->post('/auth/login-form', $params, $headers);

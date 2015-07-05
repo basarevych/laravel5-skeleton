@@ -36,7 +36,7 @@ class RegistrationControllerTest extends TestCase
         $user = factory(App\User::class)->create();
         $user->tokens()->save($reset);
 
-        $user->active = false;
+        $user->is_active = false;
         $user->save();
 
         $data = $this->get('auth/registration/' . $reset->token);
@@ -45,7 +45,7 @@ class RegistrationControllerTest extends TestCase
             "Form should be displayed"
         );
         $this->assertTrue(
-            (bool)App\User::find(1)->first()->active,
+            (bool)App\User::find(1)->first()->is_active,
             "User account should be activated"
         );
         $this->assertEquals(
@@ -145,7 +145,7 @@ class RegistrationControllerTest extends TestCase
             "User should be created"
         );
         $this->assertFalse(
-            (bool)$user->active,
+            (bool)$user->is_active,
             "User account should be non-active"
         );
         $this->assertEquals(

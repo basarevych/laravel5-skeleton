@@ -37,7 +37,7 @@ class Admin
     {
         if ($this->auth->guest())
             abort(401);
-        else if (!$this->auth->user()->admin)
+        else if (!$this->auth->user()->is_admin)
             abort(403);
 
         return $next($request);

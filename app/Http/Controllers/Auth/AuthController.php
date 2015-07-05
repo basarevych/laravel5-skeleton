@@ -51,7 +51,7 @@ class AuthController extends Controller
     public function postLoginForm(Requests\LoginRequest $request)
     {
         $user = $this->users->findByEmail($request->input('email'));
-        if ($user && !$user->active) {
+        if ($user && !$user->is_active) {
             return redirect('auth/login-form')->withInput()
                                               ->with('message', trans('auth.user_disabled'));
         }
@@ -60,7 +60,7 @@ class AuthController extends Controller
             [
                 'email' => $request->input('email'),
                 'password' => $request->input('password'),
-                'active' => true,
+                'is_active' => true,
             ],
             $request->input('remember_me') == '1'
         );

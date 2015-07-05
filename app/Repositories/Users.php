@@ -36,8 +36,8 @@ class Users implements RepositoryInterface
         $user->name = isset($data['name']) ? $data['name'] : null;
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
-        $user->active = $active;
-        $user->admin = $admin;
+        $user->is_active = $active;
+        $user->is_admin = $admin;
         $user->save();
 
         return $user;

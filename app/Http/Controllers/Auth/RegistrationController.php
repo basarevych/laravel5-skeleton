@@ -57,7 +57,7 @@ class RegistrationController extends Controller
             $expired = false;
 
             $user = $model->user()->first();
-            $user->active = true;
+            $user->is_active = true;
             $user->save();
 
             $model->delete();

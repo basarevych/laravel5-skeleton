@@ -16,8 +16,8 @@ $factory->define(App\User::class, function ($faker) {
         'name'              => $faker->name,
         'email'             => $faker->email,
         'password'          => $faker->password,
-        'active'            => true,
-        'admin'             => false,
+        'is_active'         => true,
+        'is_admin'          => false,
         'remember_token'    => str_random(10),
     ];
 });
@@ -25,7 +25,7 @@ $factory->define(App\User::class, function ($faker) {
 $factory->defineAs(App\User::class, 'admin', function ($faker) use ($factory) {
     $user = $factory->raw('App\User');
 
-    return array_merge($user, ['admin' => true]);
+    return array_merge($user, ['is_admin' => true]);
 });
 
 $factory->defineAs(App\Token::class, App\Token::TYPE_PASSWORD_RESET, function ($faker) {
