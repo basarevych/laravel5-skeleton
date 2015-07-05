@@ -29,6 +29,24 @@
                     </ul>
 
                     @if (Auth::check())
+                        <ul class="nav navbar-nav">
+                            @if (Request::is('user'))
+                                <li class="dropdown active">
+                            @else
+                                <li class="dropdown">
+                            @endif
+                                <a href="javascript:void(0)" data-toggle="dropdown" role="button"
+                                    class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                                    {{ trans('messages.administration') }} <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ url('user') }}">{{ trans('messages.users') }}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                         <div class="btn-group navbar-btn navbar-right">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {{ Auth::user()->name ? Auth::user()->name : Auth::user()->email }}

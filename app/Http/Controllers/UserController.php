@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
+
 class UserController extends Controller
 {
     /**
@@ -17,7 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        return view('user.index', [ 'users' => $users ]);
     }
 
     /**

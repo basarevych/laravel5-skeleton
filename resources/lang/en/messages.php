@@ -20,6 +20,8 @@ return [
     "sign_up"           => "Register",
     "sign_out"          => "Sign out",
     "profile"           => "Profile",
+    "administration"    => "Administration",
+    "users"             => "Users",
 
     // Forms
     "close"             => "Close",

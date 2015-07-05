@@ -6536,5 +6536,24 @@ body.with-centered-container .jumbotron {
   display: none;
   float: right;
 }
+.button-panel {
+  text-align: center;
+}
+.button-panel button {
+  width: 100%;
+}
+.button-panel hr {
+  margin: 3px 0;
+}
+.button-panel .group-title {
+  width: 100%;
+  text-align: left;
+}
+.button-panel .checkbox,
+.button-panel .radio {
+  width: 100%;
+  text-align: left;
+  margin: 0 0 3px 0;
+}
 
 /*# sourceMappingURL=app.css.map */
