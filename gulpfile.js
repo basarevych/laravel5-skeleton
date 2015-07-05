@@ -22,10 +22,33 @@ elixir(function(mix) {
             '../bower_components/bootstrap/dist/js/bootstrap.js',
             '../bower_components/jquery.cookie/jquery.cookie.js',
             '../bower_components/jquery-form/jquery.form.js',
-            '*.js'
+            'src/*.js'
         ],
         'public/js/app.js'
     );
 
     mix.copy("resources/assets/bower_components/bootstrap/fonts", "public/fonts");
+});
+
+/*
+ |--------------------------------------------------------------------------
+ | Frontend Testing
+ |--------------------------------------------------------------------------
+ |
+ | Testing task with Jasmine, jQuery and PhantomJS
+ |
+ */
+
+var gulp = require('gulp');
+var jasmine = require('gulp-jasmine-phantom');
+
+gulp.task('test', function() {
+    return gulp.src('resources/assets/js/tests/specs/*.js')
+            .pipe(jasmine({
+                integration: true,
+                vendor: [
+                    'public/js/app.js',
+                    'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+                ]
+            }));
 });
