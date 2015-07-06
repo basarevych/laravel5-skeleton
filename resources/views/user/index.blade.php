@@ -77,13 +77,13 @@
                         <td colspan="5">
                             <div class="pagination btn-group pull-right" role="group">
                                 <a href="javascript:setSize(15)"
-                                    class="btn btn-default {{ $size == 15 ? 'active' : '' }}">15</a>
+                                    class="btn btn-{{ $size == 15 ? 'primary' : 'default' }}">15</a>
                                 <a href="javascript:setSize(30)"
-                                    class="btn btn-default  {{ $size == 30 ? 'active' : '' }}">30</a>
+                                    class="btn btn-{{ $size == 30 ? 'primary' : 'default' }}">30</a>
                                 <a href="javascript:setSize(50)"
-                                    class="btn btn-default {{ $size == 50 ? 'active' : '' }}">50</a>
+                                    class="btn btn-{{ $size == 50 ? 'primary' : 'default' }}">50</a>
                                 <a href="javascript:setSize(0)"
-                                    class="btn btn-default {{ $size == 0 ? 'active' : '' }}">{{ trans('messages.all') }}</a>
+                                    class="btn btn-{{ $size == 0 ? 'primary' : 'default' }}">{{ trans('messages.all') }}</a>
                             </div>
                             {!! $users->render() !!}
                         </td>
