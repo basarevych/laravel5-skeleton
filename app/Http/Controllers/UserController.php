@@ -17,11 +17,27 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $page = $request->input('page', 1);
 
-        return view('user.index', [ 'users' => $users ]);
+        $sortBy = $request->input('sort_by', 'id');
+        if (!in_array($sortBy, [ 'id', 'name', 'email', 'is_active', 'is_admin' ]))
+            $sortBy = 'id';
+
+        $sortOrder = $request->input('sort_order', 'asc');
+        if (!in_array($sortOrder, [ 'asc', 'desc' ]))
+            $sortOrder = 'asc';
+
+        $users = User::orderBy($sortBy, $sortOrder)->paginate(15);
+        $users->setPath('user');
+
+        return view('user.index', [
+            'page'      => $page,
+            'sortBy'    => $sortBy,
+            'sortOrder' => $sortOrder,
+            'users'     => $users
+        ]);
     }
 
     /**

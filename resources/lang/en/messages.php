@@ -28,5 +28,7 @@ return [
     "cancel"            => "Cancel",
     "submit"            => "Submit",
     "required_field"    => "REQUIRED FIELD",
+    "yes"               => "Yes",
+    "no"                => "No",
 
 ];
