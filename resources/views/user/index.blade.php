@@ -74,7 +74,19 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <td colspan="5">{!! $users->appends([ 'sort_by' => $sortBy, 'sort_order' => $sortOrder ])->render() !!}</td>
+                        <td colspan="5">
+                            <div class="pagination btn-group pull-right" role="group">
+                                <a href="javascript:setSize(15)"
+                                    class="btn btn-default {{ $size == 15 ? 'active' : '' }}">15</a>
+                                <a href="javascript:setSize(30)"
+                                    class="btn btn-default  {{ $size == 30 ? 'active' : '' }}">30</a>
+                                <a href="javascript:setSize(50)"
+                                    class="btn btn-default {{ $size == 50 ? 'active' : '' }}">50</a>
+                                <a href="javascript:setSize(0)"
+                                    class="btn btn-default {{ $size == 0 ? 'active' : '' }}">{{ trans('messages.all') }}</a>
+                            </div>
+                            {!! $users->render() !!}
+                        </td>
                     </tfoot>
                 </table>
             <div>
@@ -82,12 +94,28 @@
     </div>
 
     <script>
-        var sortBy = '{{ $sortBy }}', sortOrder = '{{ $sortOrder }}';
+        var page = {{ $page }},
+            size = {{ $size }},
+            sortBy = '{{ $sortBy }}',
+            sortOrder = '{{ $sortOrder }}';
+
         function setSort(column) {
             var newOrder = 'asc';
             if (sortBy == column)
                 newOrder = (sortOrder == 'asc' ? 'desc' : 'asc');
-            window.location = "{{ url('user') . '?page=' . $page }}&sort_by=" + column + "&sort_order=" + newOrder;
+            window.location = "{{ url('user') }}"
+                + '?page=' + page
+                + '&size=' + size
+                + '&sort_by=' + column
+                + '&sort_order=' + newOrder;
+        }
+
+        function setSize(size) {
+            window.location = "{{ url('user') }}"
+                + '?page=1'
+                + '&size=' + size
+                + '&sort_by=' + sortBy
+                + '&sort_order=' + sortOrder;
         }
     </script>
 @endsection

@@ -19,21 +19,47 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $refresh = false;
+
+        $size = $request->input('size', 15);
+        if (!in_array($size, [ 15, 30, 50, 0 ])) {
+            $size = 15;
+            $refresh = true;
+        }
+
+        $total = User::count();
+        $max = ($size == 0 ? 1 : ceil($total / $size));
         $page = $request->input('page', 1);
+        if ($page < 1) {
+            $page = 1;
+            $refresh = true;
+        } else if ($page > $max) {
+            $page = $max;
+            $refresh = true;
+        }
 
         $sortBy = $request->input('sort_by', 'id');
-        if (!in_array($sortBy, [ 'id', 'name', 'email', 'is_active', 'is_admin' ]))
+        if (!in_array($sortBy, [ 'id', 'name', 'email', 'is_active', 'is_admin' ])) {
             $sortBy = 'id';
+            $refresh = true;
+        }
 
         $sortOrder = $request->input('sort_order', 'asc');
-        if (!in_array($sortOrder, [ 'asc', 'desc' ]))
+        if (!in_array($sortOrder, [ 'asc', 'desc' ])) {
             $sortOrder = 'asc';
+            $refresh = true;
+        }
 
-        $users = User::orderBy($sortBy, $sortOrder)->paginate(15);
+        if ($refresh)
+            return redirect('user?page=' . $page . '&size=' . $size . '&sort_by=' . $sortBy . '&sort_order=' . $sortOrder);
+
+        $users = User::orderBy($sortBy, $sortOrder)->paginate($size == 0 ? $total : $size);
         $users->setPath('user');
+        $users->appends([ 'size' => $size, 'sort_by' => $sortBy, 'sort_order' => $sortOrder ]);
 
         return view('user.index', [
             'page'      => $page,
+            'size'      => $size,
             'sortBy'    => $sortBy,
             'sortOrder' => $sortOrder,
             'users'     => $users

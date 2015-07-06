@@ -31,4 +31,7 @@ return [
     "yes"               => "Yes",
     "no"                => "No",
 
+    // Pagination
+    "all"               => "All",
+
 ];
