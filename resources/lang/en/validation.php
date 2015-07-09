@@ -109,6 +109,8 @@ return [
         'password'              => 'password',
         'password_confirmation' => 'password confirmation',
         'remember_me'           => '"remember me"',
+        'is_active'             => '"active"',
+        'is_admin'              => '"admin"',
         'g-recaptcha-response'  => 'captcha',
     ],
 

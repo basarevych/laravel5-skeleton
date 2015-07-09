@@ -13062,7 +13062,7 @@ function validateFormField(element, url) {
     var timestamp = new Date().getTime();
     var serialized = form.serializeArray();
 
-    if (serialized.length == 0)
+    if (!element.is(':visible') || serialized.length == 0)
         return;
 
     var data = {};

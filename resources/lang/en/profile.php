@@ -19,4 +19,6 @@ return [
     "password_notice"   => "Leave empty if you do not want to change it",
     "form_submit"       => "Save changes",
 
+    "save_failed"       => "Could not save profile, check input",
+
 ]; 

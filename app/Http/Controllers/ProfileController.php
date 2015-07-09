@@ -38,7 +38,12 @@ class ProfileController extends Controller
         if (strlen($data['password']))
             $user->password = bcrypt($data['password']);
 
-        $user->save();
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            return redirect('profile-form')->withInput()
+                                           ->with('message', trans('profile.save_failed'));
+        }
 
         return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide'); window.location.reload()" ]);
     }
@@ -61,5 +66,4 @@ class ProfileController extends Controller
 
         return response()->json([ 'valid' => true, 'errors' => [] ]);
     }
-
 }

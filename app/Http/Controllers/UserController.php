@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -22,7 +24,7 @@ class UserController extends Controller
         $refresh = false;
 
         $size = $request->input('size', 15);
-        if (!in_array($size, [ 15, 30, 50, 0 ])) {
+        if (!in_array($size, [ 15, 30, 50, 100, 0 ])) {
             $size = 15;
             $refresh = true;
         }
@@ -73,17 +75,53 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create-form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     * @param \App\Http\Requests\CreateUserRequest $request
      * @return Response
      */
-    public function store()
+    public function store(Requests\CreateUserRequest $request)
     {
-        //
+        $data = array_map('trim', $request->input());
+
+        $user = new User();
+        $user->name = strlen($data['name']) ? $data['name'] : null;
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);
+        $user->is_active = (bool)@$data['is_active'];
+        $user->is_admin = (bool)@$data['is_admin'];
+
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            return redirect('user')->withInput()
+                                   ->with('message', trans('user.create_failed'));
+        }
+
+        return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide'); window.location.reload()" ]);
+    }
+
+    /**
+     * Validate create user form field
+     *
+     * @return Response
+     */
+    public function createValidate(Request $request)
+    {
+        $rules = (new Requests\CreateUserRequest)->rules();
+        $field = $request->input('field');
+        $form = $request->input('form');
+
+        $validator = Validator::make($form, $rules);
+        $messages = $validator->messages()->toArray();
+        if (isset($messages[$field]))
+            return response()->json([ 'valid' => false, 'errors' => $messages[$field] ]);
+
+        return response()->json([ 'valid' => true, 'errors' => [] ]);
     }
 
     /**

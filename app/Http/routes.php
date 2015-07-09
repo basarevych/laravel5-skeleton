@@ -57,5 +57,6 @@ Route::group([ 'middleware' => 'auth' ], function () {
 Route::group([ 'middleware' => 'admin' ], function () {
 
     Route::resource('user', 'UserController');
+    Route::post('user/create-validate', 'UserController@createValidate');
 
 });
