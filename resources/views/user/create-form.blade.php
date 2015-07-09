@@ -13,7 +13,7 @@
         </label>
         <div class="col-sm-8">
             <input class="form-control" type="text" name="name"
-                   data-on-blur="validateFormField($('#modal-form [name=name]'), '{{ url('user/create-validate') }}')"
+                   data-on-blur="validateFormField($('#modal-form [name=name]'), '{{ url('user/validate-create-form') }}')"
                    data-on-enter="$('#modal-form [name=email]').focus()">
             <div class="help-block"></div>
         </div>
@@ -28,7 +28,7 @@
         </label>
         <div class="col-sm-8">
             <input class="form-control" type="text" name="email"
-                   data-on-blur="validateFormField($('#modal-form [name=email]'), '{{ url('user/create-validate') }}')"
+                   data-on-blur="validateFormField($('#modal-form [name=email]'), '{{ url('user/validate-create-form') }}')"
                    data-on-enter="$('#modal-form [name=password]').focus()">
             <div class="help-block"></div>
         </div>
@@ -43,7 +43,7 @@
         </label>
         <div class="col-sm-8">
             <input class="form-control" type="password" name="password"
-                   data-on-blur="validateFormField($('#modal-form [name=password]'), '{{ url('user/create-validate') }}')"
+                   data-on-blur="validateFormField($('#modal-form [name=password]'), '{{ url('user/validate-create-form') }}')"
                    data-on-enter="$('#modal-form [name=password_confirmation]').focus()">
             <div class="help-block"></div>
         </div>
@@ -69,7 +69,7 @@
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="is_active" value="1" checked="checked"
-                           data-on-blur="validateFormField($('#modal-form [name=is_active]'), '{{ url('user/create-validate') }}')"
+                           data-on-blur="validateFormField($('#modal-form [name=is_active]'), '{{ url('user/validate-create-form') }}')"
                            data-on-enter="$('#modal-form [name=is_admin]').focus()">
                     {{ trans('user.is_active_label') }}
                 </label>
@@ -83,7 +83,7 @@
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="is_admin" value="1"
-                           data-on-blur="validateFormField($('#modal-form [name=is_admin]'), '{{ url('user/create-validate') }}')"
+                           data-on-blur="validateFormField($('#modal-form [name=is_admin]'), '{{ url('user/validate-create-form') }}')"
                            data-on-enter="$('#modal-form [type=submit]').focus().click()">
                     {{ trans('user.is_admin_label') }}
                 </label>
@@ -95,8 +95,8 @@
 
 <script>
     function validatePasswords() {
-        validateFormField($('#modal-form [name=password]'), '{{ url('user/create-validate') }}');
-        validateFormField($('#modal-form [name=password_confirmation]'), '{{ url('user/create-validate') }}');
+        validateFormField($('#modal-form [name=password]'), '{{ url('user/validate-create-form') }}');
+        validateFormField($('#modal-form [name=password_confirmation]'), '{{ url('user/validate-create-form') }}');
     }
 
     var modal = $('#modal-form');

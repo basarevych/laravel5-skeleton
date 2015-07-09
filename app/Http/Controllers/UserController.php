@@ -110,7 +110,7 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function createValidate(Request $request)
+    public function validateCreateForm(Request $request)
     {
         $rules = (new Requests\CreateUserRequest)->rules();
         $field = $request->input('field');
