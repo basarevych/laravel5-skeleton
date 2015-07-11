@@ -12888,11 +12888,12 @@ $(document).on('blur', '[data-on-blur]', function (e) {
 
 /*
     Show Bootstrap alert
+
+    cbDismiss (optional) is the callback called when the form is dismissed
 */
-function bsAlert(msg, title, cb) {
+function bsAlert(msg, title, cbDismiss) {
     var modal = $('#modal-form');
-    if (typeof title != 'undefined')
-        modal.find('.modal-title').text(title);
+    modal.find('.modal-title').text(title);
     modal.find('.modal-body').html(msg);
     modal.find('.modal-footer .footer-text').hide();
     modal.find('.modal-footer .spinner').hide();
@@ -12900,15 +12901,37 @@ function bsAlert(msg, title, cb) {
     modal.find('button.form-cancel').hide();
     modal.find('button.form-close').show();
     modal.find('button.form-submit').hide();
-    modal.one('hide.bs.modal', function() {
-        if (typeof cb != 'undefined')
-            cb();
-    });
+    if (typeof cbDismiss != 'undefined')
+        modal.one('hide.bs.modal', function() { cbDismiss(); });
     modal.modal('show');
 }
 
 /*
-    Fetch content of a Bootstrap modal form
+    Show Bootstrap confirmation dialog
+
+    cbDismiss is optional
+*/
+function bsConfirm(msg, title, button, cbSubmit, cbDismiss) {
+    var modal = $('#modal-form');
+    modal.find('.modal-title').text(title);
+    modal.find('.modal-body').html(msg);
+    modal.find('.modal-footer .footer-text').hide();
+    modal.find('.modal-footer .spinner').hide();
+    modal.find('.modal-footer .buttons').show();
+    modal.find('button.form-cancel').show();
+    modal.find('button.form-close').hide();
+    modal.find('button.form-submit')
+        .text(button)
+        .off('click')
+        .on('click', function () { cbSubmit(); })
+        .show();
+    if (typeof cbDismiss != 'undefined')
+        modal.one('hide.bs.modal', function() { cbDismiss(); });
+    modal.modal('show');
+}
+
+/*
+    Fetch content and display a Bootstrap modal form
 */
 function openModalForm(url) {
     $.ajax({
@@ -12942,7 +12965,7 @@ function setFormFocus(form) {
 
 /*
     This function will install event handlers for the modal ajax form:
-    * 'submit' buttons will ajaxSubmit() the form
+    'submit' buttons will ajaxSubmit() the form
 */
 function runModalForm(modal) {
     var spinner = modal.find('.modal-footer .spinner'),
@@ -13102,7 +13125,6 @@ function validateFormField(element, url) {
         },
     });
 }
-
 
 /*
     Makes sidebar fixed or static positioned

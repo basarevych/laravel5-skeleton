@@ -133,7 +133,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        abort(501); // Not implemented
+        $user = User::findOrFail($id);
+
+        return response()->json(array_merge([ '_token' => csrf_token() ], $user->toArray()));
     }
 
     /**
@@ -206,6 +208,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json([ 'success' => true ]);
     }
 }

@@ -63,7 +63,7 @@
                                     <button class="btn btn-xs btn-default" onclick="openModalForm('{{ url('user/' . $user->id . '/edit') }}')">
                                         {{ trans('user.edit_button') }}
                                     </button>
-                                    <button class="btn btn-xs btn-default">
+                                    <button class="btn btn-xs btn-default" onclick="deleteUser({{ $user->id }}, '{{ trans('user.delete_confirm', [ 'id' => $user->id, 'email' => $user->email ]) }}')">
                                         {{ trans('user.delete_button') }}
                                     </button>
                                 </td>
@@ -115,6 +115,34 @@
                 + '&size=' + size
                 + '&sort_by=' + sortBy
                 + '&sort_order=' + sortOrder;
+        }
+
+        function deleteUser(id, question) {
+            var url = '{{ url('user') }}' + '/' + id;
+            bsConfirm(
+                question,
+                '{{ trans('user.delete_title') }}',
+                '{{ trans('user.delete_button') }}',
+                function () {
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function (data) {
+                            $.ajax({
+                                url: url,
+                                method: 'DELETE',
+                                data: {
+                                    '_token': data._token,
+                                },
+                                success: function () {
+                                    $('#modal-form').modal('hide');
+                                    window.location.reload();
+                                },
+                            });
+                        },
+                    });
+                }
+            );
         }
     </script>
 @endsection

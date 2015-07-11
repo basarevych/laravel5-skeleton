@@ -33,6 +33,8 @@ return [
     "is_admin_label"    => "Admin",
     "create_submit"     => "Create",
     "edit_submit"       => "Save changes",
+    "delete_confirm"    => "Delete user :id (email: :email)?",
+    "delete_title"      => "Delete user",
 
     "create_failed"     => "Could not create user, check input",
     "update_failed"     => "Could not update user, check input",
