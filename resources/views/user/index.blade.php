@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>{{ trans('user.page_title') }}</h1>
-                <button id="create-button" class="btn btn-default">
+                <button class="btn btn-default" onclick="openModalForm('{{ url('user/create') }}')">
                     {{ trans('user.create_button') }}
                 </button>
             </div>
@@ -60,10 +60,10 @@
                                 <td>{{ trans('messages.' . ($user->is_active ? 'yes' : 'no')) }}</td>
                                 <td>{{ trans('messages.' . ($user->is_admin ? 'yes' : 'no')) }}</td>
                                 <td class="buttons-column">
-                                    <button id="edit-button" class="btn btn-xs btn-default">
+                                    <button class="btn btn-xs btn-default" onclick="openModalForm('{{ url('user/' . $user->id . '/edit') }}')">
                                         {{ trans('user.edit_button') }}
                                     </button>
-                                    <button id="delete-button" class="btn btn-xs btn-default">
+                                    <button class="btn btn-xs btn-default">
                                         {{ trans('user.delete_button') }}
                                     </button>
                                 </td>
@@ -116,9 +116,5 @@
                 + '&sort_by=' + sortBy
                 + '&sort_order=' + sortOrder;
         }
-
-        $('#create-button').on('click', function () {
-            openModalForm("{{ url('user/create') }}");
-        });
     </script>
 @endsection

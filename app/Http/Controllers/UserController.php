@@ -108,6 +108,7 @@ class UserController extends Controller
     /**
      * Validate create user form field
      *
+     * @param  Request $request;
      * @return Response
      */
     public function validateCreateForm(Request $request)
@@ -132,7 +133,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        abort(501); // Not implemented
     }
 
     /**
@@ -143,18 +144,58 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('user.edit-form', [ 'user' => $user ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param \App\Http\Requests\EditUserRequest $request
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Requests\EditUserRequest $request, $id)
     {
-        //
+        $data = array_map('trim', $request->input());
+
+        $user = User::findOrFail($id);
+        $user->name = strlen($data['name']) ? $data['name'] : null;
+        $user->email = $data['email'];
+        if (strlen($data['password']))
+            $user->password = bcrypt($data['password']);
+        $user->is_active = (bool)@$data['is_active'];
+        $user->is_admin = (bool)@$data['is_admin'];
+
+        try {
+            $user->save();
+        } catch (\Exception $e) {
+            return redirect('user/' . $id . '/edit')->withInput()
+                                                    ->with('message', trans('user.update_failed'));
+        }
+
+        return view('layouts/script', [ 'script' => "$('#modal-form').modal('hide'); window.location.reload()" ]);
+    }
+
+    /**
+     * Validate edit user form field
+     *
+     * @param  Request $request;
+     * @param  int  $id
+     * @return Response
+     */
+    public function validateEditForm(Request $request, $id)
+    {
+        $rules = (new Requests\EditUserRequest)->rules();
+        $field = $request->input('field');
+        $form = $request->input('form');
+
+        $validator = Validator::make($form, $rules);
+        $messages = $validator->messages()->toArray();
+        if (isset($messages[$field]))
+            return response()->json([ 'valid' => false, 'errors' => $messages[$field] ]);
+
+        return response()->json([ 'valid' => true, 'errors' => [] ]);
     }
 
     /**

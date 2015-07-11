@@ -40,7 +40,7 @@
         </label>
         <div class="col-sm-8">
             <input class="form-control" type="password" name="password"
-                   data-on-blur="validatePasswords()"
+                   data-on-blur="validateFormField($('#modal-form [name=password]'), '{{ url('validate-profile-form') }}')"
                    data-on-enter="$('#modal-form [name=password_confirmation]').focus()">
             <p class="help-block">{{ trans('profile.password_notice') }}</p>
             <div class="help-block"></div>

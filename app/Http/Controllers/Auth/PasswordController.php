@@ -95,6 +95,7 @@ class PasswordController extends Controller
     /**
      * Validate password reset request form field
      *
+     * @param  Request $request;
      * @return Response
      */
     public function postValidateRequestForm(Request $request)
@@ -164,6 +165,7 @@ class PasswordController extends Controller
     /**
      * Validate password reset confirmation form field
      *
+     * @param  Request $request;
      * @return Response
      */
     public function postValidateConfirmForm(Request $request)

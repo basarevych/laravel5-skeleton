@@ -79,6 +79,7 @@ class AuthController extends Controller
     /**
      * Validate login form field
      *
+     * @param  Request $request;
      * @return Response
      */
     public function postValidateLoginForm(Request $request)

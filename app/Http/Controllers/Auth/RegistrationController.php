@@ -47,6 +47,7 @@ class RegistrationController extends Controller
     /**
      * Activate user account
      *
+     * @param  string $token
      * @return Response
      */
     public function getRegistration($token)
@@ -127,6 +128,7 @@ class RegistrationController extends Controller
     /**
      * Validate registration form field
      *
+     * @param  Request $request;
      * @return Response
      */
     public function postValidateRegistrationForm(Request $request)

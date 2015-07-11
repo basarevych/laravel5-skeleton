@@ -22,15 +22,19 @@ return [
     "is_active_label"   => "Active",
     "is_admin_label"    => "Admin",
 
-    "form_title"        => "Create user",
+    "create_title"      => "Create user",
+    "edit_title"        => "Edit user",
     "name_label"        => "Name",
     "email_label"       => "eMail",
     "password1_label"   => "Password",
     "password2_label"   => "Retype password",
+    "password_notice"   => "Leave empty if you do not want to change it",
     "is_active_label"   => "Active",
     "is_admin_label"    => "Admin",
-    "form_submit"       => "Create",
+    "create_submit"     => "Create",
+    "edit_submit"       => "Save changes",
 
     "create_failed"     => "Could not create user, check input",
+    "update_failed"     => "Could not update user, check input",
 
 ];

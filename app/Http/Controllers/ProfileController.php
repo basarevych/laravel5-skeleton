@@ -51,6 +51,7 @@ class ProfileController extends Controller
     /**
      * Validate profile form field
      *
+     * @param  Request $request;
      * @return Response
      */
     public function postValidateProfileForm(Request $request)
