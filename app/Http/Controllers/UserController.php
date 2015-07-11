@@ -41,7 +41,7 @@ class UserController extends Controller
         }
 
         $sortBy = $request->input('sort_by', 'id');
-        if (!in_array($sortBy, [ 'id', 'name', 'email', 'is_active', 'is_admin' ])) {
+        if (!in_array($sortBy, [ 'id', 'name', 'email', 'created_at', 'is_active', 'is_admin' ])) {
             $sortBy = 'id';
             $refresh = true;
         }

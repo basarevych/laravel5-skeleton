@@ -22,6 +22,7 @@ elixir(function(mix) {
             '../bower_components/bootstrap/dist/js/bootstrap.js',
             '../bower_components/jquery.cookie/jquery.cookie.js',
             '../bower_components/jquery-form/jquery.form.js',
+            '../bower_components/moment/min/moment-with-locales.js',
             'src/*.js'
         ],
         'public/js/app.js'
