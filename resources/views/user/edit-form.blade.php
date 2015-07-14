@@ -95,16 +95,43 @@
         validateFormField($('#modal-form [name=password_confirmation]'), '{{ url('user/' . $user->id . '/validate-edit-form') }}');
     }
 
+    function deleteUser() {
+        bsConfirm(
+            '{{ trans('user.delete_confirm', [ 'id' => $user->id, 'email' => $user->email ]) }}',
+            '{{ trans('user.delete_title') }}',
+            '{{ trans('user.delete_button') }}',
+            function () {
+                modal.find('.modal-footer .spinner').show();
+                modal.find('.modal-footer .buttons').hide();
+                $.ajax({
+                    url: '{{ url('user/' . $user->id) }}',
+                    method: 'DELETE',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                    },
+                    success: function () {
+                        window.location.reload();
+                    },
+                });
+            },
+            function () {
+                openModalForm('{{ url('user/' . $user->id . '/edit') }}');
+            }
+        );
+    }
+
     var modal = $('#modal-form');
+    var deleteButton = $('<button type="button" class="btn btn-danger"></button>');
+    deleteButton.text('{{ trans('user.delete_button') }}');
+    deleteButton.on('click', deleteUser);
 
     modal.find('.modal-title').text("{{ trans('user.edit_title') }}");
-    modal.find('.modal-footer .footer-text').hide();
+    modal.find('.modal-footer .footer-text').show().empty().append(deleteButton);
     modal.find('.modal-footer .spinner').hide();
     modal.find('.modal-footer .buttons').show();
     modal.find('button.form-cancel').show();
     modal.find('button.form-close').hide();
     modal.find('button.form-submit').show().text("{{ trans('user.edit_submit') }}");
-    modal.find('.modal-footer .footer-text').hide();
 
     runModalForm(modal);
 </script>

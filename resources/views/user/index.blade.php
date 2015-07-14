@@ -11,14 +11,6 @@
             sortBy = '{{ $sortBy }}',
             sortOrder = '{{ $sortOrder }}';
 
-        function printDateTime(timestamp) {
-            if (timestamp == null)
-                return;
-
-            var local = moment.unix(timestamp).local();
-            document.write(local.format('YYYY-MM-DD HH:mm:ss Z'));
-        }
-
         function setSort(column) {
             var newOrder = 'asc';
             if (sortBy == column)
@@ -36,34 +28,6 @@
                 + '&size=' + size
                 + '&sort_by=' + sortBy
                 + '&sort_order=' + sortOrder;
-        }
-
-        function deleteUser(id, question) {
-            var url = '{{ url('user') }}' + '/' + id;
-            bsConfirm(
-                question,
-                '{{ trans('user.delete_title') }}',
-                '{{ trans('user.delete_button') }}',
-                function () {
-                    $.ajax({
-                        url: url,
-                        method: 'GET',
-                        success: function (data) {
-                            $.ajax({
-                                url: url,
-                                method: 'DELETE',
-                                data: {
-                                    '_token': data._token,
-                                },
-                                success: function () {
-                                    $('#modal-form').modal('hide');
-                                    window.location.reload();
-                                },
-                            });
-                        },
-                    });
-                }
-            );
         }
     </script>
 
@@ -117,14 +81,17 @@
                                 <span class="glyphicon glyphicon-sort-by-attributes{{ $sortOrder == 'asc' ? '' : '-alt' }}"></span>
                             @endif
                         </th>
-                        <th></th>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <a href="javascript:openModalForm('{{ url('user/' . $user->id . '/edit') }}')">
+                                        {{ $user->email }}
+                                    </a>
+                                </td>
                                 <td>
                                     <script>
                                         printDateTime({{ $user->created_at->getTimestamp() }});
@@ -132,19 +99,11 @@
                                 </td>
                                 <td>{{ trans('messages.' . ($user->is_active ? 'yes' : 'no')) }}</td>
                                 <td>{{ trans('messages.' . ($user->is_admin ? 'yes' : 'no')) }}</td>
-                                <td class="buttons-column">
-                                    <button class="btn btn-xs btn-default" onclick="openModalForm('{{ url('user/' . $user->id . '/edit') }}')">
-                                        {{ trans('user.edit_button') }}
-                                    </button>
-                                    <button class="btn btn-xs btn-default" onclick="deleteUser({{ $user->id }}, '{{ trans('user.delete_confirm', [ 'id' => $user->id, 'email' => $user->email ]) }}')">
-                                        {{ trans('user.delete_button') }}
-                                    </button>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <td colspan="7">
+                        <td colspan="6">
                             <div class="pagination btn-group pull-right" role="group">
                                 <a href="javascript:setSize(15)"
                                     class="btn btn-{{ $size == 15 ? 'primary' : 'default' }}">15</a>

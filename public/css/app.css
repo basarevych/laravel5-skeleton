@@ -6536,9 +6536,5 @@ body.with-centered-container .jumbotron {
   display: none;
   float: right;
 }
-table .buttons-column {
-  width: 1px;
-  white-space: nowrap;
-}
 
 /*# sourceMappingURL=app.css.map */

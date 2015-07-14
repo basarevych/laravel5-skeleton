@@ -13,8 +13,7 @@ return [
 
     "page_title"        => "Users",
     "create_button"     => "Create user",
-    "edit_button"       => "Edit",
-    "delete_button"     => "Delete",
+    "delete_button"     => "Delete user",
 
     "id_label"          => "ID",
     "name_label"        => "Name",

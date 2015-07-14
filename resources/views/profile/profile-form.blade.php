@@ -75,7 +75,6 @@
     modal.find('button.form-cancel').show();
     modal.find('button.form-close').hide();
     modal.find('button.form-submit').show().text("{{ trans('profile.form_submit') }}");
-    modal.find('.modal-footer .footer-text').hide();
 
     runModalForm(modal);
 </script>
