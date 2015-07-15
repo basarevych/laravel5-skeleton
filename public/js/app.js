@@ -22640,6 +22640,8 @@ $(document).on('blur', '[data-on-blur]', function (e) {
 */
 function bsAlert(msg, title, cbDismiss) {
     var modal = $('#modal-form');
+    modal.find('.loading').hide();
+    modal.find('.loaded').show();
     modal.find('.modal-title').text(title);
     modal.find('.modal-body').html(msg);
     modal.find('.modal-footer .footer-text').hide();
@@ -22648,8 +22650,10 @@ function bsAlert(msg, title, cbDismiss) {
     modal.find('button.form-cancel').hide();
     modal.find('button.form-close').show();
     modal.find('button.form-submit').hide();
+
     if (typeof cbDismiss != 'undefined')
-        modal.one('hide.bs.modal', function() { cbDismiss(); });
+        modal.one('hidden.bs.modal', function() { cbDismiss(); });
+
     modal.modal('show');
 }
 
@@ -22660,6 +22664,8 @@ function bsAlert(msg, title, cbDismiss) {
 */
 function bsConfirm(msg, title, button, cbSubmit, cbDismiss) {
     var modal = $('#modal-form');
+    modal.find('.loading').hide();
+    modal.find('.loaded').show();
     modal.find('.modal-title').text(title);
     modal.find('.modal-body').html(msg);
     modal.find('.modal-footer .footer-text').hide();
@@ -22667,13 +22673,16 @@ function bsConfirm(msg, title, button, cbSubmit, cbDismiss) {
     modal.find('.modal-footer .buttons').show();
     modal.find('button.form-cancel').show();
     modal.find('button.form-close').hide();
+
     modal.find('button.form-submit')
         .text(button)
         .off('click')
         .on('click', function () { cbSubmit(); })
         .show();
+
     if (typeof cbDismiss != 'undefined')
-        modal.one('hide.bs.modal', function() { cbDismiss(); });
+        modal.one('hidden.bs.modal', function() { cbDismiss(); });
+
     modal.modal('show');
 }
 
@@ -22681,10 +22690,18 @@ function bsConfirm(msg, title, button, cbSubmit, cbDismiss) {
     Fetch content and display a Bootstrap modal form
 */
 function openModalForm(url) {
+    var modal = $('#modal-form');
+    modal.find('.loading').show();
+    modal.find('.loaded').hide();
+
+    modal.modal('show');
+
     $.ajax({
         url: url,
         success: function (html) {
-            $('#modal-form').find('.modal-body').html(html);
+            modal.find('.modal-body').html(html);
+            modal.find('.loading').hide();
+            modal.find('.loaded').show();
         }
     });
 }
@@ -22748,9 +22765,6 @@ function runModalForm(modal) {
                 },
             });
         });
-
-    if (!modal.is(':visible'))
-        modal.modal('show');
 
     setFormFocus(modal.find('form'));
 }

@@ -48,30 +48,28 @@ body.with-centered-container {
     }
 }
 
-.required-marker {
-    display: block;
-    vertical-align: super;
-    font-size: 65%;
-}
-
 .modal {
     z-index: 99999;
-}
 
-.modal-body {
-    .required-marker {
-        display: block;
-        vertical-align: super;
-        font-size: 65%;
+    .modal-body {
+        .required-marker {
+            display: block;
+            vertical-align: super;
+            font-size: 65%;
+        }
     }
-}
 
-.modal-footer {
-    .footer-text {
-        float: left;
+    .loading {
+        padding: 80px 0;
+        text-align: center;
     }
-    .spinner {
-        display: none;
-        float: right;
+
+    .modal-footer {
+        .footer-text {
+            float: left;
+        }
+        .spinner {
+            float: right;
+        }
     }
 }

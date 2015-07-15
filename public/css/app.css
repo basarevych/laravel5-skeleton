@@ -6516,24 +6516,22 @@ body.with-centered-container .jumbotron {
 .error-list li:before {
   content: '\e090';
 }
-.required-marker {
-  display: block;
-  vertical-align: super;
-  font-size: 65%;
-}
 .modal {
   z-index: 99999;
 }
-.modal-body .required-marker {
+.modal .modal-body .required-marker {
   display: block;
   vertical-align: super;
   font-size: 65%;
 }
-.modal-footer .footer-text {
+.modal .loading {
+  padding: 80px 0;
+  text-align: center;
+}
+.modal .modal-footer .footer-text {
   float: left;
 }
-.modal-footer .spinner {
-  display: none;
+.modal .modal-footer .spinner {
   float: right;
 }
 
