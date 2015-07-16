@@ -1,9 +1,17 @@
-/*
-    Show Bootstrap alert
+/**
+ * Modal dialog callback (no parameters)
+ *
+ * @callback modalCallback
+ */
 
-    cbDismiss (optional) is the callback called when the form is dismissed
-*/
-function bsAlert(msg, title, cbDismiss) {
+/**
+ * Show alert as a Bootstrap modal dialog
+ *
+ * @param {string} msg                  The message
+ * @param {string} title                The title
+ * @param {modalCallback} [cbClosed]    Optional callback called when the dialog is closed
+ */
+function bsAlert(msg, title, cbClosed) {
     var modal = $('#modal-form');
     modal.find('.loading').hide();
     modal.find('.loaded').show();
@@ -16,18 +24,22 @@ function bsAlert(msg, title, cbDismiss) {
     modal.find('button.form-close').show();
     modal.find('button.form-submit').hide();
 
-    if (typeof cbDismiss != 'undefined')
-        modal.one('hidden.bs.modal', function() { cbDismiss(); });
+    if (typeof cbClosed != 'undefined')
+        modal.one('hidden.bs.modal', function() { cbClosed(); });
 
     modal.modal('show');
 }
 
-/*
-    Show Bootstrap confirmation dialog
-
-    cbDismiss is optional
-*/
-function bsConfirm(msg, title, button, cbSubmit, cbDismiss) {
+/**
+ * Show Bootstrap confirmation dialog
+ *
+ * @param {string} msg                  The message
+ * @param {string} title                The title
+ * @param {string} button               Text on the button
+ * @param {modalCallback} cbSubmit      Callback called only when the button is pressed
+ * @param {modalCallback} [cbClosed]    Optional callback called when the dialog is closed
+ */
+function bsConfirm(msg, title, button, cbSubmit, cbClosed) {
     var modal = $('#modal-form');
     modal.find('.loading').hide();
     modal.find('.loaded').show();
@@ -45,15 +57,17 @@ function bsConfirm(msg, title, button, cbSubmit, cbDismiss) {
         .on('click', function () { cbSubmit(); })
         .show();
 
-    if (typeof cbDismiss != 'undefined')
-        modal.one('hidden.bs.modal', function() { cbDismiss(); });
+    if (typeof cbClosed != 'undefined')
+        modal.one('hidden.bs.modal', function() { cbClosed(); });
 
     modal.modal('show');
 }
 
-/*
-    Fetch content and display a Bootstrap modal form
-*/
+/**
+ * Fetch content and display a form in Bootstrap modal dialog
+ *
+ * @param {string} url                  URL which will fetch the form content
+ */
 function openModalForm(url) {
     var modal = $('#modal-form');
     modal.find('.loading').show();
@@ -67,20 +81,23 @@ function openModalForm(url) {
             modal.find('.modal-body').html(html);
             modal.find('.loading').hide();
             modal.find('.loaded').show();
+            setFormFocus(modal);
         }
     });
 }
 
-/*
-    This will initiate focus for the form
-*/
-function setFormFocus(form) {
-    if (!form.is(':visible'))
+/**
+ * This will initiate focus for the form inside a Bootstrap modal dialog
+ *
+ * @param {object} modal                Modal dialog jQuery object
+ */
+function setFormFocus(modal) {
+    if (!modal.is(':visible'))
         return;
 
-    var parents = form.find('.has-error');
+    var parents = modal.find('.has-error');
     if (parents.length == 0) 
-        parents = form;
+        parents = modal;
 
     parents.find('.form-control, input')
           .each(function (index, element) {
@@ -92,10 +109,12 @@ function setFormFocus(form) {
           });
 }
 
-/*
-    This function will install event handlers for the modal ajax form:
-    'submit' buttons will ajaxSubmit() the form
-*/
+/**
+ * This function will install event handlers for the modal ajax form:
+ * 'submit' button will ajaxSubmit() the form
+ *
+ * @param {object} modal                Modal dialog jQuery object
+ */
 function runModalForm(modal) {
     var spinner = modal.find('.modal-footer .spinner'),
         buttons = modal.find('.modal-footer .buttons');
@@ -130,24 +149,25 @@ function runModalForm(modal) {
                 },
             });
         });
-
-    setFormFocus(modal.find('form'));
 }
 
-/*
-    We expect the form to be created like this (errors will go into 'help-block' div):
-    <form action="the/action/here">
-        <div class="form-group">
-            <label class="col-sm-4 control-label" for="my-input">
-                The label
-            </label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" name="my-input" id="my-input">
-                <div class="help-block"></div>
-            </div>
-        </div>
-    </form>
-*/
+/**
+ * We expect the form to be created like this (errors will go into 'help-block' div):
+ * <form action="the/action/here">
+ *   <div class="form-group">
+ *     <label class="col-sm-4 control-label" for="my-input">
+ *       The label
+ *     </label>
+ *     <div class="col-sm-8">
+ *       <input type="text" class="form-control" name="my-input" id="my-input">
+ *       <div class="help-block"></div>
+ *     </div>
+ *   </div>
+ * </form>
+ *
+ * @param {object} element              Input element jQuery object which errors are displayed
+ * @param {array} errors                Array of error messages
+ */
 function showValidationErrors(element, errors) {
     if (element.length == 0 || element.attr('type') == 'hidden')
         return;
@@ -174,36 +194,39 @@ function showValidationErrors(element, errors) {
     }
 }
 
-/*
-    The following will validate the field and display errors in the help-block div of invalid elements:
-    validateFormField(element, 'url/of/validator');
-        
-    Validation request is sent as POST:
-    {
-        field: 'my-input',
-        form: {
-            'my-input': 'the value',
-            'other-control': 'other value',
-            // ... rest of the form controls
-        }
-    }
-    'field' field is the name of the control to be validated, 'form' field is all the form controls.
-
-    When the field is valid the server should respond with json data:
-    {
-        valid: true,
-        errors: []
-    }
-
-    And when the field is invalid:
-    {
-        valid: false,
-        errors: [
-            'error message 1,
-            'error message 2
-        ]
-    }
-*/
+/**
+ * The following will validate the field and display errors in the help-block div of invalid elements:
+ * validateFormField($('input[name=my-input]'), 'url/of/validator');
+ *
+ * Validation request is sent as POST:
+ * {
+ *   field: 'my-input',
+ *   form: {
+ *     'my-input': 'the value',
+ *     'other-control': 'other value',
+ *     // ... rest of the form controls
+ *   }
+ * }
+ * 'field' field is the name of the control to be validated, 'form' field is all the form controls.
+ *
+ * When the field is valid the server should respond with json data:
+ * {
+ *   valid: true,
+ *   errors: []
+ * }
+ *
+ * And when the field is invalid:
+ * {
+ *   valid: false,
+ *   errors: [
+ *     'error message 1,
+ *     'error message 2
+ *   ]
+ * }
+ *
+ * @param {object} element              Input element jQuery object which should be validated
+ * @param {string} url                  URL of the backend validator
+ */
 function validateFormField(element, url) {
     var form = element.closest('form');
     var name = element.attr('name');

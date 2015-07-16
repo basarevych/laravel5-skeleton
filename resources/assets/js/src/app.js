@@ -1,6 +1,8 @@
-/*
-    Echoes date/time in browser timezone
-*/
+/**
+ * Echoes date/time in browser current timezone
+ *
+ * @param {number} timestamp                Unix timestamp (seconds) not JS one (milliseconds)
+ */
 function printDateTime(timestamp) {
     if (timestamp == null)
         return;
